@@ -19,6 +19,8 @@ if [[ -n "${HOMEBREW_PREFIX}" ]]; then
     export PATH="${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin:$PATH"
     # grep
     export PATH="${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin:$PATH"
+    # gnu-tar
+    export PATH="${HOMEBREW_PREFIX}/opt/gnu-tar/libexec/gnubin:$PATH"
     # curl
     export PATH="${HOMEBREW_PREFIX}/opt/curl/bin:$PATH"
     # openssl
