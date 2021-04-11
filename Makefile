@@ -1,4 +1,4 @@
-TARGETS := tmux vim
+TARGETS := zsh tmux vim
 
 .PHONY: install
 install: $(TARGETS)
@@ -6,6 +6,7 @@ install: $(TARGETS)
 .PHONY: $(TARGETS)
 
 # Define config file for each target
+zsh: zshrc
 tmux: tmux.conf
 vim: vimrc
 

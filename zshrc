@@ -1,0 +1,20 @@
+# Homebrew
+# Apple Silicon Mac
+test -f /opt/homebrew/bin/brew && eval $(/opt/homebrew/bin/brew shellenv)
+# Intel Mac
+test -f /usr/local/bin/brew && eval $(/usr/local/bin/brew shellenv)
+
+# PATH to user installed pip package executables
+export PATH="$HOME/.local/bin:$PATH"
+
+# Load anyenv
+eval "$(anyenv init -)"
+
+export PATH="$HOME/.poetry/bin:$PATH"
+
+if [[ -n "${HOMEBREW_PREFIX}" ]]; then
+    # curl
+    export PATH="${HOMEBREW_PREFIX}/opt/curl/bin:$PATH"
+    # openssl
+    export PATH="${HOMEBREW_PREFIX}/opt/openssl@1.1/bin:$PATH"
+fi
