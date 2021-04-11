@@ -13,6 +13,12 @@ eval "$(anyenv init -)"
 export PATH="$HOME/.poetry/bin:$PATH"
 
 if [[ -n "${HOMEBREW_PREFIX}" ]]; then
+    # coreutils
+    export PATH="${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin:$PATH"
+    # gnu-sed
+    export PATH="${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin:$PATH"
+    # grep
+    export PATH="${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin:$PATH"
     # curl
     export PATH="${HOMEBREW_PREFIX}/opt/curl/bin:$PATH"
     # openssl
