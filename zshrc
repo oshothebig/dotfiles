@@ -27,5 +27,8 @@ if [[ -n "${HOMEBREW_PREFIX}" ]]; then
     export PATH="${HOMEBREW_PREFIX}/opt/openssl@1.1/bin:$PATH"
 fi
 
+# Completion
+autoload -Uz compinit && compinit
+
 # Load local only settings if available
 test -f ~/.zshrc.local && source ~/.zshrc.local
