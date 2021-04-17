@@ -7,9 +7,6 @@ test -f /usr/local/bin/brew && eval $(/usr/local/bin/brew shellenv)
 # PATH to user installed pip package executables
 export PATH="$HOME/.local/bin:$PATH"
 
-# Load anyenv
-eval "$(anyenv init -)"
-
 export PATH="$HOME/.poetry/bin:$PATH"
 
 if [[ -n "${HOMEBREW_PREFIX}" ]]; then
