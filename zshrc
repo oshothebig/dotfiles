@@ -27,6 +27,11 @@ if [[ -n "${HOMEBREW_PREFIX}" ]]; then
     export PATH="${HOMEBREW_PREFIX}/opt/openssl@1.1/bin:$PATH"
 fi
 
+# Go
+if type go >/dev/null 2>&1; then
+    export GOPATH=$HOME/go
+fi
+
 # Completion
 autoload -Uz compinit && compinit
 
