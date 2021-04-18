@@ -27,6 +27,11 @@ fi
 # Alias
 alias ls='ls --color'
 
+# pyenv
+if type pyenv >/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+fi
+
 # Go
 if type go >/dev/null 2>&1; then
     export GOPATH="$HOME/go"
