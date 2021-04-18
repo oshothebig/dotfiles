@@ -42,3 +42,6 @@ autoload -Uz compinit && compinit
 
 # Load local only settings if available
 test -f ~/.zshrc.local && source ~/.zshrc.local
+
+# Remove duplicated PATH entries
+typeset -U path PATH
