@@ -31,7 +31,7 @@ alias ls='ls --color'
 
 # pyenv
 if type pyenv >/dev/null 2>&1; then
-    eval "$(pyenv init -)"
+    eval "$(pyenv init --path)"
 fi
 
 # Go
