@@ -1,9 +1,9 @@
 TARGETS := zsh tmux vim
 
 .PHONY: install
-install: $(TARGETS)
+install: $(TARGETS) bat
 
-.PHONY: $(TARGETS)
+.PHONY: $(TARGETS) bat
 
 # Define config file for each target
 zsh: zshrc
@@ -14,6 +14,9 @@ vim: vimrc
 $(TARGETS):
 	$(eval dotfile := .$<)
 	test -f ~/$(dotfile) || ln -s $(CURDIR)/$< ~/$(dotfile)
+
+bat:
+	test -f ~/.config/$@ || ln -s $(CURDIR)/$@ ~/.config/$@
 
 clean:
 	unlink ~/.tmux.conf
