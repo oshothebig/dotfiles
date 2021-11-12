@@ -1,3 +1,7 @@
+# Temoporary solution avoiding Homebrew's path is placed
+# at the end of PATH env var when running tmux.
+export HOMEBREW_SHELLENV_PREFIX=""
+
 # Homebrew
 # Apple Silicon Mac
 test -f /opt/homebrew/bin/brew && eval $(/opt/homebrew/bin/brew shellenv)
