@@ -34,6 +34,8 @@ fi
 alias ls='ls --color'
 alias repo='cd $(ghq list -p | peco)'
 
+export GHQ_ROOT=$HOME/src
+
 # pyenv
 if type pyenv >/dev/null 2>&1; then
     eval "$(pyenv init --path)"
