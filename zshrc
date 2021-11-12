@@ -28,6 +28,7 @@ fi
 
 # Alias
 alias ls='ls --color'
+alias repo='cd $(ghq list -p | peco)'
 
 # pyenv
 if type pyenv >/dev/null 2>&1; then
