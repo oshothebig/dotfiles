@@ -16,7 +16,7 @@ $(TARGETS):
 	test -f ~/$(dotfile) || ln -s $(CURDIR)/$< ~/$(dotfile)
 
 bat:
-	test -f ~/.config/$@ || ln -s $(CURDIR)/$@ ~/.config/$@
+	test -L ~/.config/$@ || ln -s $(CURDIR)/$@ ~/.config/$@
 
 gpg:
 	test -f ~/.gnupg/gpg-agent.conf || ln -s $(CURDIR)/gnupg/gpg-agent.conf ~/.gnupg/gpg-agent.conf
