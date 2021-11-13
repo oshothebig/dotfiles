@@ -48,7 +48,9 @@ if type go >/dev/null 2>&1; then
 fi
 
 # Starship
-eval "$(starship init zsh)"
+if type starship >/dev/null 2>&1; then
+    eval "$(starship init zsh)"
+fi
 
 # Completion
 autoload -Uz compinit && compinit
