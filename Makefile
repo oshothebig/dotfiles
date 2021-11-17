@@ -1,14 +1,15 @@
-TARGETS := zsh tmux vim
+TARGETS := zsh tmux vim git
 
 .PHONY: install
-install: $(TARGETS) bat gpg git
+install: $(TARGETS) bat gpg
 
-.PHONY: $(TARGETS) bat gpg git
+.PHONY: $(TARGETS) bat gpg
 
 # Define config file for each target
 zsh: zshrc
 tmux: tmux.conf
 vim: vimrc
+git: gitconfig
 
 # Recipe to create a symlink appending "." at the begining of the file name
 $(TARGETS):
@@ -20,9 +21,6 @@ bat:
 
 gpg:
 	test -f ~/.gnupg/gpg-agent.conf || ln -s $(CURDIR)/gnupg/gpg-agent.conf ~/.gnupg/gpg-agent.conf
-
-git:
-	test -f ~/.gitconfig || ln -s $(CURDIR)/gitconfig ~/.gitconfig
 
 clean:
 	unlink ~/.tmux.conf
