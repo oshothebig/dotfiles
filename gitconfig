@@ -1,0 +1,6 @@
+[user]
+	name = "Sho SHIMIZU"
+	email = sho.shimizu@gmail.com
+
+[include]
+	path = ~/.gitconfig.local
