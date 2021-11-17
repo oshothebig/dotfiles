@@ -11,6 +11,15 @@ tmux: tmux.conf
 vim: vimrc
 git: gitconfig
 
+# specific config directory
+gpg: | ~/.gnupg
+~/.gnupg:
+	mkdir -p $@
+
+bat: | ~/.config
+~/.config:
+	mkdir -p $@
+
 # Recipe to create a symlink appending "." at the begining of the file name
 $(TARGETS):
 	$(eval dotfile := .$<)
