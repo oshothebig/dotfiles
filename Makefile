@@ -15,6 +15,7 @@ git: gitconfig
 gpg: | ~/.gnupg
 ~/.gnupg:
 	mkdir -p $@
+	chmod 700 $@
 
 bat: | ~/.config
 ~/.config:
