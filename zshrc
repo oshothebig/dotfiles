@@ -27,7 +27,7 @@ if [[ -n "${HOMEBREW_PREFIX}" ]]; then
     # openssl
     export PATH="${HOMEBREW_PREFIX}/opt/openssl@1.1/bin:$PATH"
     # asdf-vm
-    source ${HOMEBREW_PREFIX}/opt/asdf/asdf.sh
+    source ${HOMEBREW_PREFIX}/opt/asdf/libexec/asdf.sh
 fi
 
 # Alias
