@@ -30,6 +30,9 @@ if [[ -n "${HOMEBREW_PREFIX}" ]]; then
     source ${HOMEBREW_PREFIX}/opt/asdf/libexec/asdf.sh
 fi
 
+# krew
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
 # Alias
 alias ls='ls --color'
 alias repo='cd $(ghq list -p | peco)'
