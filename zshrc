@@ -8,8 +8,6 @@ eval $(/opt/homebrew/bin/brew shellenv)
 # PATH to user installed pip package executables
 export PATH="$HOME/.local/bin:$PATH"
 
-export PATH="$HOME/.poetry/bin:$PATH"
-
 # Rust
 export PATH="$HOME/.cargo/bin:$PATH"
 
