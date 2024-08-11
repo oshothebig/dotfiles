@@ -13,6 +13,9 @@ export PATH="$HOME/.local/bin:$PATH"
 
 export PATH="$HOME/.poetry/bin:$PATH"
 
+# Rust
+export PATH="$HOME/.cargo/bin:$PATH"
+
 if [[ -n "${HOMEBREW_PREFIX}" ]]; then
     # coreutils
     export PATH="${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin:$PATH"
