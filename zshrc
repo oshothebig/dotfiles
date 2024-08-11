@@ -42,12 +42,6 @@ export GHQ_ROOT=$HOME/src
 # mise
 eval "$(mise activate zsh)"
 
-# pyenv
-if type pyenv >/dev/null 2>&1; then
-    eval "$(pyenv init --path)"
-    eval "$(pyenv init -)"
-fi
-
 # Go
 if type go >/dev/null 2>&1; then
     export GOPATH="$HOME/go"
