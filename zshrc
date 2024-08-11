@@ -26,8 +26,6 @@ if [[ -n "${HOMEBREW_PREFIX}" ]]; then
     export PATH="${HOMEBREW_PREFIX}/opt/curl/bin:$PATH"
     # openssl
     export PATH="${HOMEBREW_PREFIX}/opt/openssl@1.1/bin:$PATH"
-    # asdf-vm
-    source ${HOMEBREW_PREFIX}/opt/asdf/libexec/asdf.sh
 fi
 
 # krew
