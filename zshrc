@@ -3,10 +3,7 @@
 export HOMEBREW_SHELLENV_PREFIX=""
 
 # Homebrew
-# Apple Silicon Mac
-test -f /opt/homebrew/bin/brew && eval $(/opt/homebrew/bin/brew shellenv)
-# Intel Mac
-test -f /usr/local/bin/brew && eval $(/usr/local/bin/brew shellenv)
+eval $(/opt/homebrew/bin/brew shellenv)
 
 # PATH to user installed pip package executables
 export PATH="$HOME/.local/bin:$PATH"
