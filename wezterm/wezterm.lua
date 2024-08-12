@@ -6,6 +6,7 @@ local config = wezterm.config_builder()
 
 -- This is where you actually apply your config choices
 -- Font
+config.font = wezterm.font('JetBrains Mono', { weight = 'Medium' })
 config.font_size = 13.0
 
 -- Scroll
