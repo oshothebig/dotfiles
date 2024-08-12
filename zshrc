@@ -31,7 +31,7 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 # Alias
 alias ls='ls --color'
-alias repo='cd $(ghq list -p | peco)'
+alias repo='cd $(ghq list -p | fzf)'
 
 export GHQ_ROOT=$HOME/src
 
@@ -43,6 +43,9 @@ if type go >/dev/null 2>&1; then
     export GOPATH="$HOME/go"
     export PATH="${GOPATH}/bin:$PATH"
 fi
+
+# fzf
+export FZF_DEFAULT_OPTS="--layout=reverse"
 
 # Starship
 if type starship >/dev/null 2>&1; then
