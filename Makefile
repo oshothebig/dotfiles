@@ -1,9 +1,9 @@
 TARGETS := zsh tmux vim git
 
 .PHONY: install
-install: $(TARGETS) bat gpg
+install: $(TARGETS) bat gpg helix
 
-.PHONY: $(TARGETS) bat gpg
+.PHONY: $(TARGETS) bat gpg helix
 
 # Define config file for each target
 zsh: zshrc
@@ -17,7 +17,7 @@ gpg: | ~/.gnupg
 	mkdir -p $@
 	chmod 700 $@
 
-bat: | ~/.config
+bat helix: | ~/.config
 ~/.config:
 	mkdir -p $@
 
@@ -31,6 +31,9 @@ bat:
 
 gpg:
 	test -f ~/.gnupg/gpg-agent.conf || ln -s $(CURDIR)/gnupg/gpg-agent.conf ~/.gnupg/gpg-agent.conf
+
+helix:
+	test -f ~/.config/$@ || ln -s $(CURDIR)/$@ ~/.config/$@
 
 clean:
 	unlink ~/.tmux.conf
