@@ -22,6 +22,14 @@ if [[ -n "${HOMEBREW_PREFIX}" ]]; then
     export PATH="${HOMEBREW_PREFIX}/opt/openssl@1.1/bin:$PATH"
 fi
 
+# Use Helix for editor when available.
+# Otherwise vim is used.
+if type hx > /dev/null; then
+    export EDITOR=hx
+else
+    export EDITOR=vim
+fi
+
 # krew
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
