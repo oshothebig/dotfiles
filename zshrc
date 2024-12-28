@@ -56,6 +56,11 @@ if type starship >/dev/null 2>&1; then
     eval "$(starship init zsh)"
 fi
 
+# zsh history
+export HISTFILE=$HOME/.zsh_history
+export HISTSIZE=100000
+export SAVESIZE=100000
+
 # Completion
 autoload -Uz compinit && compinit
 
