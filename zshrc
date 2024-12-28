@@ -1,7 +1,3 @@
-# Temoporary solution avoiding Homebrew's path is placed
-# at the end of PATH env var when running tmux.
-export HOMEBREW_SHELLENV_PREFIX=""
-
 # Homebrew
 eval $(/opt/homebrew/bin/brew shellenv)
 
