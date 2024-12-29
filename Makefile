@@ -33,7 +33,7 @@ gpg:
 	test -f ~/.gnupg/gpg-agent.conf || ln -s $(CURDIR)/gnupg/gpg-agent.conf ~/.gnupg/gpg-agent.conf
 
 helix:
-	test -f ~/.config/$@ || ln -s $(CURDIR)/$@ ~/.config/$@
+	test -L ~/.config/$@ || ln -s $(CURDIR)/$@ ~/.config/$@
 
 clean:
 	unlink ~/.tmux.conf
