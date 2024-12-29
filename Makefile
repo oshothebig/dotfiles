@@ -1,9 +1,9 @@
 TARGETS := zsh tmux vim git
 
 .PHONY: install
-install: $(TARGETS) bat gpg helix
+install: $(TARGETS) bat gpg helix ghostty
 
-.PHONY: $(TARGETS) bat gpg helix
+.PHONY: $(TARGETS) bat gpg helix ghostty
 
 # Define config file for each target
 zsh: zshrc
@@ -17,7 +17,7 @@ gpg: | ~/.gnupg
 	mkdir -p $@
 	chmod 700 $@
 
-bat helix: | ~/.config
+bat helix ghostty: | ~/.config
 ~/.config:
 	mkdir -p $@
 
@@ -33,6 +33,9 @@ gpg:
 	test -f ~/.gnupg/gpg-agent.conf || ln -s $(CURDIR)/gnupg/gpg-agent.conf ~/.gnupg/gpg-agent.conf
 
 helix:
+	test -L ~/.config/$@ || ln -s $(CURDIR)/$@ ~/.config/$@
+
+ghostty:
 	test -L ~/.config/$@ || ln -s $(CURDIR)/$@ ~/.config/$@
 
 clean:
