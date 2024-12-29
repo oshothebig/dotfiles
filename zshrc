@@ -61,6 +61,9 @@ export HISTFILE=$HOME/.zsh_history
 export HISTSIZE=100000
 export SAVESIZE=100000
 
+# sheldon
+eval "$(sheldon source)"
+
 # Completion
 autoload -Uz compinit && compinit
 
