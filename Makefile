@@ -1,9 +1,9 @@
 TARGETS := zsh vim git
 
 .PHONY: install
-install: $(TARGETS) bat gpg helix ghostty
+install: $(TARGETS) bat gpg helix ghostty sheldon
 
-.PHONY: $(TARGETS) bat gpg helix ghostty
+.PHONY: $(TARGETS) bat gpg helix ghostty sheldon
 
 # Define config file for each target
 zsh: zshrc
@@ -35,4 +35,7 @@ helix:
 	test -L ~/.config/$@ || ln -s $(CURDIR)/$@ ~/.config/$@
 
 ghostty:
+	test -L ~/.config/$@ || ln -s $(CURDIR)/$@ ~/.config/$@
+
+sheldon:
 	test -L ~/.config/$@ || ln -s $(CURDIR)/$@ ~/.config/$@
