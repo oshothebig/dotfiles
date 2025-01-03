@@ -1,4 +1,4 @@
-TARGETS := zsh tmux vim git
+TARGETS := zsh vim git
 
 .PHONY: install
 install: $(TARGETS) bat gpg helix ghostty
@@ -7,7 +7,6 @@ install: $(TARGETS) bat gpg helix ghostty
 
 # Define config file for each target
 zsh: zshrc
-tmux: tmux.conf
 vim: vimrc
 git: gitconfig
 
@@ -37,6 +36,3 @@ helix:
 
 ghostty:
 	test -L ~/.config/$@ || ln -s $(CURDIR)/$@ ~/.config/$@
-
-clean:
-	unlink ~/.tmux.conf
