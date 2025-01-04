@@ -5,6 +5,15 @@ config_dir := home_directory() / ".config"
 default:
     just --list
 
+install: zsh git bat helix ghostty
+
+uninstall:
+    unlink {{home_directory()}}/.zshrc
+    unlink {{home_directory()}}/.gitconfig
+    unlink {{config_dir}}/bat
+    unlink {{config_dir}}/helix
+    unlink {{config_dir}}/ghostty
+
 zsh: (_dotfile "zshrc")
 
 git: (_dotfile "gitconfig")
