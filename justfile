@@ -5,7 +5,7 @@ config_dir := home_directory() / ".config"
 default:
     just --list
 
-install: zsh git bat helix ghostty
+install: zsh git bat helix ghostty sheldon
 
 uninstall:
     unlink {{home_directory()}}/.zshrc
@@ -13,6 +13,7 @@ uninstall:
     unlink {{config_dir}}/bat
     unlink {{config_dir}}/helix
     unlink {{config_dir}}/ghostty
+    unlink {{config_dir}}/sheldon
 
 zsh: (_dotfile "zshrc")
 
@@ -30,6 +31,8 @@ bat: (_config "bat")
 helix: (_config "helix")
 
 ghostty: (_config "ghostty")
+
+sheldon: (_config "sheldon")
 
 _config TARGET:
     # Create ~/.config directory if not exists
