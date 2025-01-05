@@ -66,6 +66,7 @@ eval "$(sheldon source)"
 
 # Completion
 autoload -Uz compinit && compinit
+source <(kubectl completion zsh)
 
 # Load local only settings if available
 test -f ~/.zshrc.local && source ~/.zshrc.local
