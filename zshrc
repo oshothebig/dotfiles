@@ -70,7 +70,7 @@ autoload -Uz compinit && compinit
 source <(kubectl completion zsh)
 
 # Load local only settings if available
-test -f ~/.zshrc.local && source ~/.zshrc.local
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 # Remove duplicated PATH entries
 typeset -U path PATH
