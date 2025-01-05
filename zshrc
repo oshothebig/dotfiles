@@ -35,6 +35,7 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 # Alias
 alias ls='ls --color'
+alias k='kubectl'
 alias repo='cd $(ghq list -p | fzf)'
 
 export GHQ_ROOT=$HOME/src
