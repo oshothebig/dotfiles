@@ -61,6 +61,10 @@ fi
 export HISTFILE=$HOME/.zsh_history
 export HISTSIZE=100000
 export SAVESIZE=100000
+setopt append_history
+setopt inc_append_history
+setopt hist_ignore_dups
+setopt hist_ignore_all_dups
 
 # sheldon
 eval "$(sheldon source)"
