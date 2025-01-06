@@ -67,7 +67,10 @@ eval "$(sheldon source)"
 
 # Completion
 autoload -Uz compinit && compinit
+zstyle ':completion:*:default' menu select=2
+
 source <(kubectl completion zsh)
+source <(kind completion zsh)
 
 # Load local only settings if available
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
