@@ -44,7 +44,7 @@ export GHQ_ROOT=$HOME/src
 eval "$(mise activate zsh)"
 
 # Go
-if type go >/dev/null 2>&1; then
+if type go > /dev/null; then
     export GOPATH="$HOME/go"
     export PATH="${GOPATH}/bin:$PATH"
 fi
@@ -53,7 +53,7 @@ fi
 export FZF_DEFAULT_OPTS="--layout=reverse"
 
 # Starship
-if type starship >/dev/null 2>&1; then
+if type starship > /dev/null; then
     eval "$(starship init zsh)"
 fi
 
