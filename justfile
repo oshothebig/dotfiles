@@ -5,10 +5,11 @@ config_dir := home_directory() / ".config"
 default:
     just --list
 
-install: zsh git bat helix ghostty sheldon
+install: zsh ssh git bat helix ghostty sheldon
 
 uninstall:
     unlink {{home_directory()}}/.zshrc
+    unlink {{home_directory()}}/.ssh/config
     unlink {{home_directory()}}/.gitconfig
     unlink {{config_dir}}/bat
     unlink {{config_dir}}/helix
@@ -16,6 +17,17 @@ uninstall:
     unlink {{config_dir}}/sheldon
 
 zsh: (_dotfile "zshrc")
+
+ssh:
+    # Create ~/.ssh directory if not exists
+    if [[ ! -d {{home_directory()}}/.ssh ]]; then \
+        mkdir -p {{home_directory()}}.ssh; \
+    fi
+
+    # Create a symlink to ~/.ssh/config
+    if [[ ! -f {{home_directory()}}/.ssh/config ]]; then \
+        ln -s {{justfile_directory()}}/ssh/config {{home_directory()}}/.ssh/config; \
+    fi
 
 git: (_dotfile "gitconfig")
 
