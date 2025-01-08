@@ -23,7 +23,7 @@ config.keys = {
 }
 
 -- Color scheme
-config.color_scheme = 'nord'
+config.color_scheme = 'Tokyo Night'
 
 -- and finally, return the configuration to wezterm
 return config
