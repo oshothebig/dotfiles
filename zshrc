@@ -108,6 +108,7 @@ function build_source_cache() {
         return 0
     fi
 
+    print -P "%F{green}Generating cache: $cache_path"
     "$@" > "$cache_path"
 }
 
