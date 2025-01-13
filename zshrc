@@ -92,25 +92,23 @@ zstyle ':completion:*:default' menu select=2
 
 function build_source_cache() {
     local cmd_name="$1"
-    local sub_command="${@:2}"
-
     local cmd_bin_path="$(command -v $cmd_name)"
-    local cache_dir="$HOME/.cache/zsh"
-    local cache_path="$cache_dir/${cmd_name}.zsh"
 
     if [[ -z "$cmd_bin_path" ]]; then
         return 0
     fi
 
+    local cache_dir="$HOME/.cache/zsh"
     if [[ ! -d "$cache_dir" ]]; then
         mkdir -p "$cache_dir"
     fi
 
+    local cache_path="$cache_dir/${cmd_name}.zsh"
     if [[ -r "$cache_path" && "$cache_path" -nt "$cmd_bin_path" ]]; then
         return 0
     fi
 
-    $cmd_name $sub_command > "$cache_path"
+    "$@" > "$cache_path"
 }
 
 build_source_cache kubectl completion zsh
