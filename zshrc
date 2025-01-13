@@ -34,11 +34,14 @@ fi
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 # Alias
-alias ls='ls --color'
-alias ll='ls -lhF'
-alias la='ls -ahF'
+alias ls='ls --color=auto'
+alias ll='ls -lhF --color=auto'
+alias la='ls -ahF --color=auto'
 alias grep='grep --color=auto'
 alias k='kubectl'
+alias g='git'
+alias ga='git add'
+alias gs='git switch'
 alias repo='cd $(ghq list -p | fzf)'
 
 export GHQ_ROOT=$HOME/src
