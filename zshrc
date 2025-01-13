@@ -90,8 +90,34 @@ eval "$(sheldon source)"
 autoload -Uz compinit && compinit
 zstyle ':completion:*:default' menu select=2
 
-source <(kubectl completion zsh)
-source <(kind completion zsh)
+function build_source_cache() {
+    local cmd_name="$1"
+    local sub_command="${@:2}"
+
+    local cmd_bin_path="$(command -v $cmd_name)"
+    local cache_dir="$HOME/.cache/zsh"
+    local cache_path="$cache_dir/${cmd_name}.zsh"
+
+    if [[ -z "$cmd_bin_path" ]]; then
+        return 0
+    fi
+
+    if [[ ! -d "$cache_dir" ]]; then
+        mkdir -p "$cache_dir"
+    fi
+
+    if [[ -r "$cache_path" && "$cache_path" -nt "$cmd_bin_path" ]]; then
+        return 0
+    fi
+
+    $cmd_name $sub_command > "$cache_path"
+}
+
+build_source_cache kubectl completion zsh
+zsh-defer source ~/.cache/zsh/kubectl.zsh
+
+build_source_cache kind completion zsh
+zsh-defer source ~/.cache/zsh/kind.zsh
 
 # Load local only settings if available
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
