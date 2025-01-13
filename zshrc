@@ -64,10 +64,21 @@ fi
 export HISTFILE=$HOME/.zsh_history
 export HISTSIZE=100000
 export SAVESIZE=100000
+setopt extended_history
 setopt append_history
 setopt inc_append_history
 setopt hist_ignore_dups
 setopt hist_ignore_all_dups
+setopt hist_find_no_dups
+setopt hist_save_no_dups
+setopt hist_verify
+
+# Delete a path segremnt when pressing Ctrl+w
+export WORDCHARS="${WORDCHARS/\/}"
+
+# Directory traversal
+setopt auto_cd
+setopt auto_pushd
 
 # sheldon
 eval "$(sheldon source)"
