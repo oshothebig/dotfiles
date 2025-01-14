@@ -1,6 +1,0 @@
-[tools]
-python = "3.12.4"
-kustomize = "5.4.3"
-kind = "0.23.0"
-kubectl = "1.29.7"
-terraform = "1.8.5"
