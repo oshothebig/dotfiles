@@ -42,9 +42,16 @@ alias k='kubectl'
 alias g='git'
 alias ga='git add'
 alias gs='git switch'
-alias repo='cd $(ghq list -p | fzf)'
 
 export GHQ_ROOT=$HOME/src
+
+function repo() {
+    local selected="$(ghq list | fzf)"
+    if [[ -z "$selected" ]]; then
+        return 0
+    fi
+    cd "$GHQ_ROOT/$selected"
+}
 
 # mise
 eval "$(mise activate zsh)"
