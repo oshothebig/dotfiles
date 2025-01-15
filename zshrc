@@ -84,6 +84,18 @@ setopt hist_save_no_dups
 setopt hist_verify
 setopt hist_no_store
 
+function fzf-select-history() {
+    local selected="$(history -n -r 1 | fzf --scheme=history --query "$LBUFFER")"
+    if [[ -z "$selected" ]]; then
+        return 0
+    fi
+    BUFFER="$selected"
+    CURSOR=$#BUFFER
+    zle reset-prompt
+}
+zle -N fzf-select-history
+bindkey '^R' fzf-select-history
+
 # Delete a path segremnt when pressing Ctrl+w
 export WORDCHARS="${WORDCHARS/\/}"
 
