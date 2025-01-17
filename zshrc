@@ -43,6 +43,12 @@ alias g='git'
 alias ga='git add'
 alias gs='git switch'
 
+# mise
+eval "$(mise activate zsh)"
+
+# zoxide
+eval "$(zoxide init zsh)"
+
 export GHQ_ROOT=$HOME/src
 
 function repo() {
@@ -50,11 +56,8 @@ function repo() {
     if [[ -z "$selected" ]]; then
         return 0
     fi
-    cd "$GHQ_ROOT/$selected"
+    z "$GHQ_ROOT/$selected"
 }
-
-# mise
-eval "$(mise activate zsh)"
 
 # Go
 if type go > /dev/null; then
