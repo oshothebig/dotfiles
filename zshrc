@@ -1,6 +1,45 @@
 # Homebrew
 eval $(/opt/homebrew/bin/brew shellenv)
 
+# sheldon
+eval "$(sheldon source)"
+
+function build_source_cache() {
+    local cmd_name="$1"
+    local cmd_bin_path="$(command -v $cmd_name)"
+
+    if [[ -z "$cmd_bin_path" ]]; then
+        return 0
+    fi
+
+    local cache_dir="$HOME/.cache/zsh"
+    if [[ ! -d "$cache_dir" ]]; then
+        mkdir -p "$cache_dir"
+    fi
+
+    local cache_path="$cache_dir/${cmd_name}.zsh"
+    if [[ -r "$cache_path" && "$cache_path" -nt "$cmd_bin_path" ]]; then
+        return 0
+    fi
+
+    print -P "%F{green}Generating cache: $cache_path"
+    "$@" > "$cache_path"
+}
+
+# mise
+build_source_cache mise activate zsh
+zsh-defer source ~/.cache/zsh/mise.zsh
+
+# zoxide
+build_source_cache zoxide init zsh
+zsh-defer source ~/.cache/zsh/zoxide.zsh
+
+build_source_cache kubectl completion zsh
+zsh-defer source ~/.cache/zsh/kubectl.zsh
+
+build_source_cache kind completion zsh
+zsh-defer source ~/.cache/zsh/kind.zsh
+
 # PATH to user installed pip package executables
 export PATH="$HOME/.local/bin:$PATH"
 
@@ -42,12 +81,6 @@ alias k='kubectl'
 alias g='git'
 alias ga='git add'
 alias gs='git switch'
-
-# mise
-eval "$(mise activate zsh)"
-
-# zoxide
-eval "$(zoxide init zsh)"
 
 export GHQ_ROOT=$HOME/src
 
@@ -106,40 +139,9 @@ export WORDCHARS="${WORDCHARS/\/}"
 setopt auto_cd
 setopt auto_pushd
 
-# sheldon
-eval "$(sheldon source)"
-
 # Completion
 autoload -Uz compinit && compinit
 zstyle ':completion:*:default' menu select=2
-
-function build_source_cache() {
-    local cmd_name="$1"
-    local cmd_bin_path="$(command -v $cmd_name)"
-
-    if [[ -z "$cmd_bin_path" ]]; then
-        return 0
-    fi
-
-    local cache_dir="$HOME/.cache/zsh"
-    if [[ ! -d "$cache_dir" ]]; then
-        mkdir -p "$cache_dir"
-    fi
-
-    local cache_path="$cache_dir/${cmd_name}.zsh"
-    if [[ -r "$cache_path" && "$cache_path" -nt "$cmd_bin_path" ]]; then
-        return 0
-    fi
-
-    print -P "%F{green}Generating cache: $cache_path"
-    "$@" > "$cache_path"
-}
-
-build_source_cache kubectl completion zsh
-zsh-defer source ~/.cache/zsh/kubectl.zsh
-
-build_source_cache kind completion zsh
-zsh-defer source ~/.cache/zsh/kind.zsh
 
 # Load local only settings if available
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
