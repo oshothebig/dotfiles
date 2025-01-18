@@ -1,5 +1,5 @@
 # Homebrew
-eval $(/opt/homebrew/bin/brew shellenv)
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # sheldon
 eval "$(sheldon source)"
