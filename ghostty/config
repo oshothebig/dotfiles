@@ -6,3 +6,4 @@ window-padding-x = 10
 font-family = JetBrains Mono
 font-family = PlemolJP
 font-feature = -dlig
+keybind = shift+enter=text:\n
