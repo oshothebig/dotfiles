@@ -21,7 +21,7 @@ zsh: (_dotfile "zshrc")
 ssh:
     # Create ~/.ssh directory if not exists
     if [[ ! -d {{home_directory()}}/.ssh ]]; then \
-        mkdir -p {{home_directory()}}.ssh; \
+        mkdir -p {{home_directory()}}/.ssh; \
     fi
 
     # Create a symlink to ~/.ssh/config
