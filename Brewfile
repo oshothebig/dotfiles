@@ -1,7 +1,6 @@
 tap "cue-lang/tap"
 tap "fluxcd/tap"
 tap "hashicorp/tap"
-tap "homebrew/bundle"
 brew "argo"
 brew "aws-iam-authenticator"
 brew "ca-certificates"
