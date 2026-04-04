@@ -3,7 +3,7 @@
 	email = sho.shimizu@gmail.com
 
 [include]
-	path = ~/.gitconfig.local
+	path = ~/.config/git/config.local
 
 [url "git@github.com:"]
 	pushInsteadOf = git://github.com/

@@ -10,7 +10,7 @@ install: zsh ssh git bat helix ghostty sheldon
 uninstall:
     unlink {{home_directory()}}/.zshrc
     unlink {{home_directory()}}/.ssh/config
-    unlink {{home_directory()}}/.gitconfig
+    unlink {{config_dir}}/git/config
     unlink {{config_dir}}/bat
     unlink {{config_dir}}/helix
     unlink {{config_dir}}/ghostty
@@ -29,7 +29,18 @@ ssh:
         ln -s {{justfile_directory()}}/ssh/config {{home_directory()}}/.ssh/config; \
     fi
 
-git: (_dotfile "gitconfig")
+git:
+    # Create ~/.config/git directory if not exists
+    if [[ ! -d {{config_dir}}/git ]]; then \
+        mkdir -p {{config_dir}}/git; \
+    fi
+
+    # Create a symlink to ~/.config/git/config
+    if [[ ! -e {{config_dir}}/git/config ]]; then \
+        ln -s {{justfile_directory()}}/git/config {{config_dir}}/git/config; \
+    else \
+        echo "{{config_dir}}/git/config exists, do nothing"; \
+    fi
 
 _dotfile TARGET:
     if [[ -e {{home_directory()}}/.{{TARGET}} ]]; then \
