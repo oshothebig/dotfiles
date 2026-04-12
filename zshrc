@@ -61,6 +61,9 @@ if [[ -n "${HOMEBREW_PREFIX}" ]]; then
     export PATH="${HOMEBREW_PREFIX}/opt/openssl@1.1/bin:$PATH"
 fi
 
+# LM Studio CLI
+export PATH="$PATH:$HOME/.lmstudio/bin"
+
 # Use Helix for editor when available.
 # Otherwise vim is used.
 if type hx > /dev/null; then
