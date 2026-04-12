@@ -95,6 +95,14 @@ function repo() {
     z "$GHQ_ROOT/$selected"
 }
 
+function repo-widget() {
+    zle -I
+    repo
+    zle reset-prompt
+}
+zle -N repo-widget
+bindkey '^Xp' repo-widget
+
 # Go
 if type go > /dev/null; then
     export GOPATH="$HOME/go"
