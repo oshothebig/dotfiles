@@ -112,7 +112,7 @@ fi
 # zsh history
 export HISTFILE=$HOME/.zsh_history
 export HISTSIZE=100000
-export SAVESIZE=100000
+export SAVEHIST=100000
 setopt extended_history
 setopt append_history
 setopt inc_append_history
