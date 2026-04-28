@@ -40,6 +40,9 @@ zsh-defer source ~/.cache/zsh/kubectl.zsh
 build_source_cache kind completion zsh
 zsh-defer source ~/.cache/zsh/kind.zsh
 
+build_source_cache jj util completion zsh
+zsh-defer source ~/.cache/zsh/jj.zsh
+
 # PATH to user installed pip package executables
 export PATH="$HOME/.local/bin:$PATH"
 
