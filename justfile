@@ -16,6 +16,7 @@ uninstall:
     unlink {{config_dir}}/ghostty
     unlink {{config_dir}}/sheldon
     unlink {{home_directory()}}/.claude/settings.json
+    unlink {{home_directory()}}/.claude/CLAUDE.md
 
 zsh: (_dotfile "zshrc")
 
@@ -65,10 +66,17 @@ claude:
     fi
 
     # Create a symlink to ~/.claude/settings.json
-    if [[ ! -e {{home_directory()}}/.claude/settings.json ]]; then \
-        ln -s {{justfile_directory()}}/claude/settings.json {{home_directory()}}/.claude/settings.json; \
+    if [[ ! -e "{{home_directory()}}/.claude/settings.json" ]]; then \
+        ln -s "{{justfile_directory()}}/claude/settings.json" "{{home_directory()}}/.claude/settings.json"; \
     else \
         echo "{{home_directory()}}/.claude/settings.json exists, do nothing"; \
+    fi
+
+    # Create a symlink to ~/.claude/CLAUDE.md
+    if [[ ! -e "{{home_directory()}}/.claude/CLAUDE.md" ]]; then \
+        ln -s "{{justfile_directory()}}/claude/CLAUDE.md" "{{home_directory()}}/.claude/CLAUDE.md"; \
+    else \
+        echo "{{home_directory()}}/.claude/CLAUDE.md exists, do nothing"; \
     fi
 
 _config TARGET:
