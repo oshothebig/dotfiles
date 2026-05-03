@@ -5,7 +5,7 @@ config_dir := home_directory() / ".config"
 default:
     just --list
 
-install: zsh ssh git bat helix ghostty sheldon
+install: zsh ssh git bat helix ghostty sheldon claude
 
 uninstall:
     unlink {{home_directory()}}/.zshrc
@@ -15,6 +15,7 @@ uninstall:
     unlink {{config_dir}}/helix
     unlink {{config_dir}}/ghostty
     unlink {{config_dir}}/sheldon
+    unlink {{home_directory()}}/.claude/settings.json
 
 zsh: (_dotfile "zshrc")
 
@@ -56,6 +57,19 @@ helix: (_config "helix")
 ghostty: (_config "ghostty")
 
 sheldon: (_config "sheldon")
+
+claude:
+    # Create ~/.claude directory if not exists
+    if [[ ! -d {{home_directory()}}/.claude ]]; then \
+        mkdir -p {{home_directory()}}/.claude; \
+    fi
+
+    # Create a symlink to ~/.claude/settings.json
+    if [[ ! -e {{home_directory()}}/.claude/settings.json ]]; then \
+        ln -s {{justfile_directory()}}/claude/settings.json {{home_directory()}}/.claude/settings.json; \
+    else \
+        echo "{{home_directory()}}/.claude/settings.json exists, do nothing"; \
+    fi
 
 _config TARGET:
     # Create ~/.config directory if not exists

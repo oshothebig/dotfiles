@@ -1,0 +1,52 @@
+{
+  "cleanupPeriodDays": 365,
+  "permissions": {
+    "allow": [
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git status:*)",
+      "Bash(git show:*)",
+      "Bash(git branch:*)",
+      "Bash(git add:*)",
+      "Bash(git rm:*)",
+      "Bash(git mv:*)",
+      "Bash(gh issue view:*)",
+      "Bash(gh issue list:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr diff:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh pr checks:*)",
+      "Bash(gh pr status:*)",
+      "Bash(gh release list:*)",
+      "Bash(gh release view:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh run view:*)",
+      "Bash(gh search issues:*)",
+      "Bash(gh search prs:*)",
+      "Bash(mkdir -p:*)",
+      "Bash(grep:*)",
+      "Bash(find .:*)",
+      "Bash(wc:*)",
+      "Bash(sort:*)",
+      "Bash(diff:*)",
+      "Bash(jq:*)",
+      "Bash(yq eval:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(echo:*)",
+      "Bash(cat:*)",
+      "Bash(ls:*)",
+      "Bash(stat:*)",
+      "Bash(file:*)",
+      "Bash(which:*)",
+      "Bash(pwd:*)"
+    ],
+    "deny": [],
+    "ask": []
+  },
+  "model": "opus[1m]",
+  "enabledPlugins": {
+    "skill-creator@claude-plugins-official": true
+  },
+  "language": "日本語"
+}
