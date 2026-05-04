@@ -16,3 +16,8 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Install the minimum tools needed for the bootstrap steps.
 brew install git ghq just
+
+# Clone the dotfiles repository via HTTPS without GitHub authentication.
+if [[ ! -d "$GHQ_ROOT/github.com/oshothebig/dotfiles" ]]; then
+    ghq get "https://github.com/oshothebig/dotfiles.git"
+fi
