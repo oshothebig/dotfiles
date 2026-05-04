@@ -18,6 +18,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 brew install git ghq just
 
 # Clone the dotfiles repository via HTTPS without GitHub authentication.
-if [[ ! -d "$GHQ_ROOT/github.com/oshothebig/dotfiles" ]]; then
-    ghq get "https://github.com/oshothebig/dotfiles.git"
-fi
+ghq get --update "https://github.com/oshothebig/dotfiles.git"
+
+# Apply the full Homebrew bundle from the dotfiles repository.
+brew bundle --file "$GHQ_ROOT/github.com/oshothebig/dotfiles/Brewfile"
