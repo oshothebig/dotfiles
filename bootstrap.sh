@@ -14,11 +14,12 @@ fi
 # This assumes Apple Silicon Mac only.
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Install the minimum tools needed for the bootstrap steps.
-brew install git ghq just
+# Install software declared in Brewfile of the dotfiles repository.
+curl -fsSL "https://raw.githubusercontent.com/oshothebig/dotfiles/main/Brewfile" | brew bundle --file=-
 
 # Clone the dotfiles repository via HTTPS without GitHub authentication.
 ghq get --update "https://github.com/oshothebig/dotfiles.git"
 
-# Apply the full Homebrew bundle from the dotfiles repository.
-brew bundle --file "$GHQ_ROOT/github.com/oshothebig/dotfiles/Brewfile"
+# Install dotfiles from the cloned repository.
+cd "$GHQ_ROOT/github.com/oshothebig/dotfiles"
+just install
