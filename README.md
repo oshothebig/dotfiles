@@ -15,5 +15,6 @@ This bootstrap script assumes an Apple Silicon Mac.
 export GHQ_ROOT="$HOME/src"
 ghq get https://github.com/oshothebig/dotfiles.git
 cd "$GHQ_ROOT/github.com/oshothebig/dotfiles"
+git remote set-url origin git@github.com:oshothebig/dotfiles.git
 just install
 ```
