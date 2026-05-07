@@ -60,8 +60,6 @@ if [[ -n "${HOMEBREW_PREFIX}" ]]; then
     export PATH="${HOMEBREW_PREFIX}/opt/gnu-tar/libexec/gnubin:$PATH"
     # curl
     export PATH="${HOMEBREW_PREFIX}/opt/curl/bin:$PATH"
-    # openssl
-    export PATH="${HOMEBREW_PREFIX}/opt/openssl@1.1/bin:$PATH"
 fi
 
 # LM Studio CLI
