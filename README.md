@@ -40,3 +40,13 @@ curl -fsSL https://ampcode.com/install.sh | bash
 ```
 
 as described in https://ampcode.com/manual#getting-started-command-line-interface.
+
+### pi coding agent
+
+pi coding agent doesn't provide installation via Homebrew. I prefer `npm` over curl and bash.
+
+```sh
+npm install -g @earendil-works/pi-coding-agent
+```
+
+as described in https://pi.dev/docs/latest/quickstart#install.
