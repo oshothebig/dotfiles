@@ -18,3 +18,25 @@ cd "$GHQ_ROOT/github.com/oshothebig/dotfiles"
 git remote set-url origin git@github.com:oshothebig/dotfiles.git
 just install
 ```
+
+## Software installed manually
+
+### Claude Code
+
+Anthropic recommends native install over Homebrew. In addtion, I want to use auto-update feature that is not available when installing via Homebrew.
+
+```sh
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+as described in https://code.claude.com/docs/ja/quickstart#native-install-recommended.
+
+### Amp
+
+Amp doesn't provide installation via Homebrew. The following installation is their recommendation.
+
+```sh
+curl -fsSL https://ampcode.com/install.sh | bash
+```
+
+as described in https://ampcode.com/manual#getting-started-command-line-interface.
