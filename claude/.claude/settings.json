@@ -48,7 +48,6 @@
     "deny": [],
     "ask": []
   },
-  "model": "opus[1m]",
   "enabledPlugins": {
     "skill-creator@claude-plugins-official": true
   },
