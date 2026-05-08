@@ -1,1 +1,8 @@
+# macOS
+.DS_Store
+
+# Visual Studio Code
+.vscode/
+
+# Local Claude settings
 .claude/settings.local.json
