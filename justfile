@@ -1,7 +1,5 @@
 set shell := ["bash", "-uc"]
 
-config_dir := home_directory() / ".config"
-
 default:
     just --list
 
@@ -11,15 +9,7 @@ format:
 install: zsh ssh git bat helix ghostty sheldon claude
 
 uninstall:
-    unlink {{ home_directory() }}/.zshrc
-    unlink {{ home_directory() }}/.ssh/config
-    unlink {{ config_dir }}/git/config
-    unlink {{ config_dir }}/bat
-    unlink {{ config_dir }}/helix
-    unlink {{ config_dir }}/ghostty
-    unlink {{ config_dir }}/sheldon
-    unlink {{ home_directory() }}/.claude/settings.json
-    unlink {{ home_directory() }}/.claude/CLAUDE.md
+    stow --delete --dir={{ justfile_directory() }} --target={{ home_directory() }} zsh ssh git bat helix ghostty sheldon claude
 
 zsh:
     stow --dir={{ justfile_directory() }} --target={{ home_directory() }} zsh
@@ -41,13 +31,6 @@ git:
 git-migrate:
     stow --adopt --dir={{ justfile_directory() }} --target={{ home_directory() }} git
     git diff -- git
-
-_dotfile TARGET:
-    if [[ -e {{ home_directory() }}/.{{ TARGET }} ]]; then \
-        echo "{{ home_directory() }}.{{ TARGET }} exists, do nothing"; \
-    else \
-        ln -s {{ justfile_directory() }}/{{ TARGET }} {{ home_directory() }}/.{{ TARGET }}; \
-    fi
 
 bat:
     stow --dir={{ justfile_directory() }} --target={{ home_directory() }} bat
@@ -83,16 +66,3 @@ claude:
 claude-migrate:
     stow --adopt --dir={{ justfile_directory() }} --target={{ home_directory() }} claude
     git diff -- claude
-
-_config TARGET:
-    # Create ~/.config directory if not exists
-    if [[ ! -d {{ config_dir }} ]]; then \
-        mkdir -p {{ config_dir }}; \
-    fi
-
-    # Create a symlink for the target config
-    if [[ -d {{ config_dir }}/{{ TARGET }} ]]; then \
-        echo "{{ config_dir }}/{{ TARGET }} exists, do nothing"; \
-    else \
-        ln -s {{ justfile_directory() }}/{{ TARGET }} {{ config_dir }}/{{ TARGET }}; \
-    fi
