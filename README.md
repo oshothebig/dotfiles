@@ -23,7 +23,7 @@ just install
 
 ### Claude Code
 
-Anthropic recommends native install over Homebrew. In addtion, I want to use auto-update feature that is not available when installing via Homebrew.
+Anthropic recommends native installation over Homebrew. In addition, I want to use the auto-update feature, which is not available when installing via Homebrew.
 
 ```sh
 curl -fsSL https://claude.ai/install.sh | bash
@@ -33,7 +33,7 @@ as described in https://code.claude.com/docs/ja/quickstart#native-install-recomm
 
 ### Amp
 
-Amp doesn't provide installation via Homebrew. The following installation is their recommendation.
+Amp doesn't provide installation via Homebrew. The following installation method is recommended.
 
 ```sh
 curl -fsSL https://ampcode.com/install.sh | bash
