@@ -60,9 +60,6 @@ helix:
     stow --dir={{ justfile_directory() }} --target={{ home_directory() }} helix
 
 helix-migrate:
-    if [[ -L {{ config_dir }}/helix && "$(readlink {{ config_dir }}/helix)" == "{{ justfile_directory() }}/helix" ]]; then \
-        unlink {{ config_dir }}/helix; \
-    fi
     stow --adopt --dir={{ justfile_directory() }} --target={{ home_directory() }} helix
     git diff -- helix
 
@@ -70,9 +67,6 @@ ghostty:
     stow --dir={{ justfile_directory() }} --target={{ home_directory() }} ghostty
 
 ghostty-migrate:
-    if [[ -L {{ config_dir }}/ghostty && "$(readlink {{ config_dir }}/ghostty)" == "{{ justfile_directory() }}/ghostty" ]]; then \
-        unlink {{ config_dir }}/ghostty; \
-    fi
     stow --adopt --dir={{ justfile_directory() }} --target={{ home_directory() }} ghostty
     git diff -- ghostty
 
