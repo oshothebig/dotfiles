@@ -1,6 +1,6 @@
 set shell := ["bash", "-uc"]
 
-packages := "zsh ssh git bat helix ghostty sheldon claude"
+packages := "zsh ssh git bat helix ghostty sheldon claude mise"
 
 default:
     just --list
@@ -37,6 +37,9 @@ sheldon:
 
 claude:
     stow --dir={{ justfile_directory() }} --target={{ home_directory() }} claude
+
+mise:
+    stow --dir={{ justfile_directory() }} --target={{ home_directory() }} mise
 
 migrate PACKAGE:
     stow --adopt --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ PACKAGE }}
