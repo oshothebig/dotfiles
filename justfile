@@ -1,15 +1,18 @@
 set shell := ["bash", "-uc"]
 
+packages := "zsh ssh git bat helix ghostty sheldon claude"
+
 default:
     just --list
 
 format:
     just --fmt
 
-install: zsh ssh git bat helix ghostty sheldon claude
+install *PACKAGES:
+    stow --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ if PACKAGES == "" { packages } else { PACKAGES } }}
 
-uninstall:
-    stow --delete --dir={{ justfile_directory() }} --target={{ home_directory() }} zsh ssh git bat helix ghostty sheldon claude
+uninstall *PACKAGES:
+    stow --delete --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ if PACKAGES == "" { packages } else { PACKAGES } }}
 
 zsh:
     stow --dir={{ justfile_directory() }} --target={{ home_directory() }} zsh
