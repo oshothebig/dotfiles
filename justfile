@@ -56,7 +56,15 @@ _dotfile TARGET:
 
 bat: (_config "bat")
 
-helix: (_config "helix")
+helix:
+    stow --dir={{ justfile_directory() }} --target={{ home_directory() }} helix
+
+helix-migrate:
+    if [[ -L {{ config_dir }}/helix && "$(readlink {{ config_dir }}/helix)" == "{{ justfile_directory() }}/helix" ]]; then \
+        unlink {{ config_dir }}/helix; \
+    fi
+    stow --adopt --dir={{ justfile_directory() }} --target={{ home_directory() }} helix
+    git diff -- helix
 
 ghostty: (_config "ghostty")
 
