@@ -21,31 +21,26 @@ uninstall:
     unlink {{ home_directory() }}/.claude/settings.json
     unlink {{ home_directory() }}/.claude/CLAUDE.md
 
-zsh: (_dotfile "zshrc")
+zsh:
+    stow --dir={{ justfile_directory() }} --target={{ home_directory() }} zsh
+
+zsh-migrate:
+    stow --adopt --dir={{ justfile_directory() }} --target={{ home_directory() }} zsh
+    git diff -- zsh
 
 ssh:
-    # Create ~/.ssh directory if not exists
-    if [[ ! -d {{ home_directory() }}/.ssh ]]; then \
-        mkdir -p {{ home_directory() }}/.ssh; \
-    fi
+    stow --dir={{ justfile_directory() }} --target={{ home_directory() }} ssh
 
-    # Create a symlink to ~/.ssh/config
-    if [[ ! -f {{ home_directory() }}/.ssh/config ]]; then \
-        ln -s {{ justfile_directory() }}/ssh/config {{ home_directory() }}/.ssh/config; \
-    fi
+ssh-migrate:
+    stow --adopt --dir={{ justfile_directory() }} --target={{ home_directory() }} ssh
+    git diff -- ssh
 
 git:
-    # Create ~/.config/git directory if not exists
-    if [[ ! -d {{ config_dir }}/git ]]; then \
-        mkdir -p {{ config_dir }}/git; \
-    fi
+    stow --dir={{ justfile_directory() }} --target={{ home_directory() }} git
 
-    # Create a symlink to ~/.config/git/config
-    if [[ ! -e {{ config_dir }}/git/config ]]; then \
-        ln -s {{ justfile_directory() }}/git/config {{ config_dir }}/git/config; \
-    else \
-        echo "{{ config_dir }}/git/config exists, do nothing"; \
-    fi
+git-migrate:
+    stow --adopt --dir={{ justfile_directory() }} --target={{ home_directory() }} git
+    git diff -- git
 
 _dotfile TARGET:
     if [[ -e {{ home_directory() }}/.{{ TARGET }} ]]; then \
@@ -54,7 +49,12 @@ _dotfile TARGET:
         ln -s {{ justfile_directory() }}/{{ TARGET }} {{ home_directory() }}/.{{ TARGET }}; \
     fi
 
-bat: (_config "bat")
+bat:
+    stow --dir={{ justfile_directory() }} --target={{ home_directory() }} bat
+
+bat-migrate:
+    stow --adopt --dir={{ justfile_directory() }} --target={{ home_directory() }} bat
+    git diff -- bat
 
 helix:
     stow --dir={{ justfile_directory() }} --target={{ home_directory() }} helix
@@ -70,27 +70,19 @@ ghostty-migrate:
     stow --adopt --dir={{ justfile_directory() }} --target={{ home_directory() }} ghostty
     git diff -- ghostty
 
-sheldon: (_config "sheldon")
+sheldon:
+    stow --dir={{ justfile_directory() }} --target={{ home_directory() }} sheldon
+
+sheldon-migrate:
+    stow --adopt --dir={{ justfile_directory() }} --target={{ home_directory() }} sheldon
+    git diff -- sheldon
 
 claude:
-    # Create ~/.claude directory if not exists
-    if [[ ! -d {{ home_directory() }}/.claude ]]; then \
-        mkdir -p {{ home_directory() }}/.claude; \
-    fi
+    stow --dir={{ justfile_directory() }} --target={{ home_directory() }} claude
 
-    # Create a symlink to ~/.claude/settings.json
-    if [[ ! -e "{{ home_directory() }}/.claude/settings.json" ]]; then \
-        ln -s "{{ justfile_directory() }}/claude/settings.json" "{{ home_directory() }}/.claude/settings.json"; \
-    else \
-        echo "{{ home_directory() }}/.claude/settings.json exists, do nothing"; \
-    fi
-
-    # Create a symlink to ~/.claude/CLAUDE.md
-    if [[ ! -e "{{ home_directory() }}/.claude/CLAUDE.md" ]]; then \
-        ln -s "{{ justfile_directory() }}/claude/CLAUDE.md" "{{ home_directory() }}/.claude/CLAUDE.md"; \
-    else \
-        echo "{{ home_directory() }}/.claude/CLAUDE.md exists, do nothing"; \
-    fi
+claude-migrate:
+    stow --adopt --dir={{ justfile_directory() }} --target={{ home_directory() }} claude
+    git diff -- claude
 
 _config TARGET:
     # Create ~/.config directory if not exists
