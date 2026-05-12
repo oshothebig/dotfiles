@@ -14,6 +14,6 @@ install *PACKAGES:
 uninstall *PACKAGES:
     stow --delete --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ if PACKAGES == "" { packages } else { PACKAGES } }}
 
-migrate PACKAGE:
-    stow --adopt --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ PACKAGE }}
+migrate +PACKAGES:
+    stow --adopt --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ PACKAGES }}
     git diff
