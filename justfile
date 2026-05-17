@@ -1,6 +1,6 @@
 set shell := ["bash", "-uc"]
 
-packages := "zsh ssh git bat helix ghostty sheldon claude mise"
+packages := "zsh ssh git bat helix ghostty sheldon claude mise jj"
 
 default:
     just --list
