@@ -9,11 +9,11 @@ format:
     just --fmt
 
 install *PACKAGES:
-    stow --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ if PACKAGES == "" { packages } else { PACKAGES } }}
+    stow -v --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ if PACKAGES == "" { packages } else { PACKAGES } }}
 
 uninstall *PACKAGES:
-    stow --delete --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ if PACKAGES == "" { packages } else { PACKAGES } }}
+    stow -v --delete --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ if PACKAGES == "" { packages } else { PACKAGES } }}
 
 migrate +PACKAGES:
-    stow --adopt --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ PACKAGES }}
+    stow -v --adopt --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ PACKAGES }}
     git diff
