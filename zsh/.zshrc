@@ -1,6 +1,9 @@
 # Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
+# Increase open file descriptor limit for interactive shells
+ulimit -n 65536 2>/dev/null || true
+
 # sheldon
 eval "$(sheldon source)"
 
