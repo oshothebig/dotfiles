@@ -9,15 +9,15 @@ default:
 format:
     just --fmt
 
-install: create-config-dir install-nofold install-fold
+install: install-nofold install-fold
 
 create-config-dir:
     mkdir -p {{ home_directory() }}/.config
 
-install-nofold:
+install-nofold: create-config-dir
     stow -v --no-folding --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ packages_nofold }}
 
-install-fold:
+install-fold: create-config-dir
     stow -v --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ packages_fold }}
 
 uninstall: uninstall-nofold uninstall-fold
