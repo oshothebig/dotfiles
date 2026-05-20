@@ -1,1 +1,13 @@
 theme = "tokyonight"
+
+[editor]
+mouse = false
+
+[editor.file-picker]
+hidden = false
+
+[editor.whitespace]
+render = "all"
+
+[editor.soft-wrap]
+enable = true
