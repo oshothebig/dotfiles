@@ -51,5 +51,10 @@
   "enabledPlugins": {
     "skill-creator@claude-plugins-official": true
   },
-  "language": "日本語"
+  "language": "日本語",
+  "statusLine": {
+    "type": "command",
+    "command": "bun x ccusage statusline",
+    "padding": 0
+  }
 }
