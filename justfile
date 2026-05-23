@@ -1,6 +1,6 @@
 set shell := ["bash", "-uc"]
 
-packages_nofold := "zsh ssh git claude mise jj"
+packages_nofold := "zsh ssh git claude mise jj codex"
 packages_fold := "bat helix ghostty sheldon"
 
 default:
