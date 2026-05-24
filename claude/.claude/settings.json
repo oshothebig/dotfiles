@@ -74,13 +74,22 @@
     "deny": [],
     "ask": []
   },
-  "enabledPlugins": {
-    "skill-creator@claude-plugins-official": true
-  },
-  "language": "日本語",
   "statusLine": {
     "type": "command",
     "command": "bun x ccusage statusline",
     "padding": 0
-  }
+  },
+  "enabledPlugins": {
+    "skill-creator@claude-plugins-official": true,
+    "codex@openai-codex": true
+  },
+  "extraKnownMarketplaces": {
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
+    }
+  },
+  "language": "日本語"
 }
