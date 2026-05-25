@@ -8,6 +8,7 @@ default:
 
 format:
     just --fmt
+    yamlfmt .
 
 install: install-nofold install-fold
 
