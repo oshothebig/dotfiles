@@ -3,3 +3,5 @@ formatter:
   line_ending: lf
   retain_line_breaks: true
   indentless_arrays: true
+  eof_newline: true
+  trim_trailing_whitespace: true
