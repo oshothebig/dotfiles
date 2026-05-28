@@ -91,5 +91,6 @@
       }
     }
   },
-  "language": "日本語"
+  "language": "日本語",
+  "skipAutoPermissionPrompt": true
 }
