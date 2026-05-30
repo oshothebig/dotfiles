@@ -10,13 +10,18 @@ format:
     just --fmt
     yamlfmt .
 
-install: install-nofold install-fold
+install: install-nofold install-fold install-copy-files
 
 create-config-dir:
     mkdir -p {{ home_directory() }}/.config
 
 install-nofold: create-config-dir
     stow -v --no-folding --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ packages_nofold }}
+
+install-copy-files:
+    # Codex doesn't read *.rules files when they are symlinks.
+    mkdir -p {{ home_directory() }}/.codex/rules
+    cp {{ justfile_directory() }}/codex/.codex/rules/*.rules {{ home_directory() }}/.codex/rules/
 
 install-fold: create-config-dir
     stow -v --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ packages_fold }}
