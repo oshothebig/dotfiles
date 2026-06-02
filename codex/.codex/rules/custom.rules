@@ -4,6 +4,7 @@ prefix_rule(pattern=["gh", "pr", ["view", "diff", "list", "checks", "status"]], 
 prefix_rule(pattern=["gh", "release", ["list", "view"]], decision="allow")
 prefix_rule(pattern=["gh", "run", ["list", "view"]], decision="allow")
 prefix_rule(pattern=["gh", "search", ["issues", "prs"]], decision="allow")
+prefix_rule(pattern=["gh", "project", ["list", "item-list", "field-list", "view"]], decision="allow")
 prefix_rule(pattern=["mkdir", "-p"], decision="allow")
 prefix_rule(pattern=["grep"], decision="allow")
 prefix_rule(pattern=["find", "."], decision="allow")
