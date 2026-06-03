@@ -1,5 +1,6 @@
 prefix_rule(pattern=["git", ["diff", "log", "status", "show", "branch", "add", "rm", "mv"]], decision="allow")
 prefix_rule(pattern=["gh", "issue", ["view", "list", "status"]], decision="allow")
+prefix_rule(pattern=["gh", "label", "list"], decision="allow")
 prefix_rule(pattern=["gh", "pr", ["view", "diff", "list", "checks", "status"]], decision="allow")
 prefix_rule(pattern=["gh", "release", ["list", "view"]], decision="allow")
 prefix_rule(pattern=["gh", "run", ["list", "view"]], decision="allow")
