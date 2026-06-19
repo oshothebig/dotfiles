@@ -1,3 +1,7 @@
+# Mac
+.DS_Store
+
+# Claude Code
 **/.claude/settings.local.json
 
 # Codex often creates LESSONS.md, but I don't want to include in a repository.
