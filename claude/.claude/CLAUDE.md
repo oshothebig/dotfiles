@@ -19,3 +19,4 @@
 ## ツール利用
 
 - 作業ディレクトリ外のリポジトリを操作する場合のみ `git -C {repo} {subcommand}` を使い、それ以外は `git {subcommand}` を使う
+- `Makefile` の代わりに `justfile` を使う。既に `Makefile` を使っている場合は利用を継続する。
