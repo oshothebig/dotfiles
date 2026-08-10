@@ -160,3 +160,7 @@ zstyle ':completion:*:default' menu select=2
 
 # Remove duplicated PATH entries
 typeset -U path PATH
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/sshimizu/.lmstudio/bin"
+# End of LM Studio CLI section
