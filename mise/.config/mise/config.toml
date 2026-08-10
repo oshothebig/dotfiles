@@ -5,3 +5,4 @@ kind = "0.31.0"
 node = "24.15.0"
 aws-cli = { version = "latest", symlink_bins = "true" }
 cilium-cli = "0.19.4"
+cue = "0.16.1"
