@@ -79,7 +79,8 @@
       "Bash(ansible-doc:*)"
     ],
     "deny": [],
-    "ask": []
+    "ask": [],
+    "defaultMode": "auto"
   },
   "statusLine": {
     "type": "command",
