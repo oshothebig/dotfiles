@@ -30,8 +30,7 @@ function build_source_cache() {
 }
 
 # mise
-build_source_cache mise activate zsh
-zsh-defer source ~/.cache/zsh/mise.zsh
+eval "$(mise activate zsh)"
 
 # zoxide
 build_source_cache zoxide init zsh
