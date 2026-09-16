@@ -32,13 +32,6 @@ function build_source_cache() {
 # mise
 eval "$(mise activate zsh)"
 
-# zoxide
-build_source_cache zoxide init zsh
-zsh-defer source ~/.cache/zsh/zoxide.zsh
-
-build_source_cache kubectl completion zsh
-zsh-defer source ~/.cache/zsh/kubectl.zsh
-
 build_source_cache kind completion zsh
 zsh-defer source ~/.cache/zsh/kind.zsh
 
@@ -153,6 +146,12 @@ setopt auto_pushd
 # Completion
 autoload -Uz compinit && compinit
 zstyle ':completion:*:default' menu select=2
+
+# kubectl
+source <(kubectl completion zsh)
+
+# zoxide
+eval "$(zoxide init zsh)"
 
 # Load local only settings if available
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
