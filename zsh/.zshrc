@@ -118,14 +118,14 @@ setopt extended_history
 setopt append_history
 setopt share_history
 setopt hist_ignore_dups
-setopt hist_ignore_all_dups
-setopt hist_find_no_dups
-setopt hist_save_no_dups
+setopt hist_ignore_space
+setopt hist_reduce_blanks
+setopt hist_fcntl_lock
 setopt hist_verify
 setopt hist_no_store
 
 function fzf-select-history() {
-    local selected="$(history -n -r 1 | fzf --scheme=history --query "$LBUFFER")"
+    local selected="$(history -n -r 1 | awk '!seen[$0]++' | fzf --scheme=history --query "$LBUFFER")"
     if [[ -z "$selected" ]]; then
         return 0
     fi
