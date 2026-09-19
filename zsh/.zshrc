@@ -65,10 +65,8 @@ export PATH="$PATH:$HOME/.lmstudio/bin"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 # Go
-if type go > /dev/null; then
-    export GOPATH="$HOME/go"
-    export PATH="${GOPATH}/bin:$PATH"
-fi
+export GOPATH="$HOME/go"
+export PATH="${GOPATH}/bin:$PATH"
 
 export GHQ_ROOT=$HOME/src
 
