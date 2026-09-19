@@ -7,10 +7,11 @@
 # Agent can run and verify those tasks end to end.
 set -euo pipefail
 
-# Pinned to the versions used by the Format check GitHub workflow so local runs
-# match CI (.github/workflows/format.yaml).
-JUST_VERSION="1.50.0"
-YAMLFMT_VERSION="0.21.0"
+# Tool versions are defined once in versions.env at the repository root and
+# shared with the Format check workflow (.github/workflows/format.yaml).
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=../versions.env
+source "$SCRIPT_DIR/../versions.env"
 
 BIN_DIR="/usr/local/bin"
 
