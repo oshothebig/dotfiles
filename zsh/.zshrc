@@ -25,14 +25,6 @@ setopt auto_pushd
 # Delete a path segremnt when pressing Ctrl+w
 export WORDCHARS="${WORDCHARS/\/}"
 
-# Use Helix for editor when available.
-# Otherwise vim is used.
-if type hx > /dev/null; then
-    export EDITOR=hx
-else
-    export EDITOR=vim
-fi
-
 # sheldon
 eval "$(sheldon source)"
 
@@ -69,6 +61,8 @@ export GOPATH="$HOME/go"
 export PATH="${GOPATH}/bin:$PATH"
 
 export GHQ_ROOT=$HOME/src
+
+export EDITOR=hx
 
 function build_source_cache() {
     local cmd_name="$1"
@@ -147,9 +141,7 @@ eval "$(zoxide init zsh)"
 export FZF_DEFAULT_OPTS="--layout=reverse"
 
 # Starship
-if type starship > /dev/null; then
-    eval "$(starship init zsh)"
-fi
+eval "$(starship init zsh)"
 
 # Load local only settings if available
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
