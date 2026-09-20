@@ -90,8 +90,7 @@ function build_source_cache() {
 autoload -Uz compinit && compinit
 zstyle ':completion:*:default' menu select=2
 
-build_source_cache kind completion zsh
-zsh-defer source ~/.cache/zsh/kind.zsh
+source <(kind completion zsh)
 
 # kubectl
 source <(kubectl completion zsh)
