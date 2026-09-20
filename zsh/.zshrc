@@ -31,7 +31,7 @@ eval "$(sheldon source)"
 # mise
 eval "$(mise activate zsh)"
 
-# PATH to user installed pip package executables
+# PATH to user installed executables
 export PATH="$HOME/.local/bin:$PATH"
 
 # Rust
