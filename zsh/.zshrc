@@ -22,7 +22,7 @@ setopt hist_no_store
 setopt auto_cd
 setopt auto_pushd
 
-# Delete a path segremnt when pressing Ctrl+w
+# Delete a path segment when pressing Ctrl+w
 export WORDCHARS="${WORDCHARS/\/}"
 
 # sheldon
