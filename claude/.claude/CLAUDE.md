@@ -21,7 +21,7 @@
 - 作業ディレクトリ外のリポジトリを操作する場合のみ `git -C {repo} {subcommand}` を使い、それ以外は `git {subcommand}` を使う
 - `Makefile` の代わりに `justfile` を使う。既に `Makefile` を使っている場合は利用を継続する。
 
-## Computer Use, Brower Use の利用
+## Computer Use, Browser Use の利用
 
 GitHub, Google Workspace, Slack を使うとき、Computer Use や Browser Use を利用するより前に他の手段を利用する。他の手段では目的を達成できない場合に Computer Use や Browser Use を利用する。
 
