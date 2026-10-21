@@ -82,14 +82,28 @@
     "ask": [],
     "defaultMode": "auto"
   },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/Users/sshimizu/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
   "statusLine": {
     "type": "command",
     "command": "bun x ccusage statusline",
     "padding": 0
   },
   "enabledPlugins": {
-    "skill-creator@claude-plugins-official": true,
-    "codex@openai-codex": true
+    "codex@openai-codex": true,
+    "mattpocock-skills@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "openai-codex": {
@@ -100,6 +114,6 @@
     }
   },
   "language": "日本語",
-  "skipAutoPermissionPrompt": true,
+  "tui": "fullscreen",
   "agentPushNotifEnabled": true
 }
