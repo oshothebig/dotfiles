@@ -90,6 +90,7 @@
       "Read(~/.kube/config)",
       "Bash(kubectl config view)",
       "Bash(kubectl config view *)",
+      "Bash(kubectl * config view)",
       "Bash(kubectl * config view *)"
     ],
     "defaultMode": "auto"
