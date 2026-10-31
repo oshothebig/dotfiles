@@ -90,9 +90,6 @@
     ],
     "defaultMode": "auto"
   },
-  "autoMode": {
-    "classifyAllShell": true
-  },
   "hooks": {
     "SessionStart": [
       {
