@@ -26,13 +26,17 @@ install-copy-files:
 install-fold: create-config-dir
     stow -v --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ packages_fold }}
 
-uninstall: uninstall-nofold uninstall-fold
+uninstall: uninstall-nofold uninstall-fold uninstall-copy-files
 
 uninstall-nofold:
     stow -v --no-folding --delete --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ packages_nofold }}
 
 uninstall-fold:
     stow -v --delete --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ packages_fold }}
+
+uninstall-copy-files:
+    # Remove only the files installed by install-copy-files; keep other rules such as Codex-generated ones.
+    for f in {{ justfile_directory() }}/codex/.codex/rules/*.rules; do rm -fv "{{ home_directory() }}/.codex/rules/$(basename "$f")"; done
 
 migrate +PACKAGES:
     stow -v --adopt --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ PACKAGES }}
