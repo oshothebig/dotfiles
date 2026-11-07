@@ -1,0 +1,6 @@
+# Tools required by this repository's own tasks (`just install`, `just format`).
+# Shared by the Cloud Agent bootstrap (.cursor/install.sh) and the Format check
+# workflow (.github/workflows/format.yaml).
+[tools]
+just = "1.50.0"
+yamlfmt = "0.21.0"
