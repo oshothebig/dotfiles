@@ -5,15 +5,14 @@
 # repo's own tasks depend on (`just install`, `just format`) are just a handful
 # of portable binaries. This script installs the Linux equivalents so a Cloud
 # Agent can run and verify those tasks end to end.
+#
+# just and yamlfmt are pinned in mise.toml at the repository root and installed
+# with mise. stow is not available from mise, so it comes from apt.
 set -euo pipefail
 
-# Tool versions are defined once in versions.env at the repository root and
-# shared with the Format check workflow (.github/workflows/format.yaml).
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=../versions.env
-source "$SCRIPT_DIR/../versions.env"
-
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 BIN_DIR="/usr/local/bin"
+MISE="${HOME}/.local/bin/mise"
 
 install_stow() {
     if command -v stow >/dev/null 2>&1; then
@@ -23,29 +22,33 @@ install_stow() {
     sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends stow
 }
 
-install_just() {
-    if command -v just >/dev/null 2>&1 &&
-        [ "$(just --version | awk '{print $2}')" = "$JUST_VERSION" ]; then
+install_mise() {
+    if command -v mise >/dev/null 2>&1; then
+        MISE="$(command -v mise)"
         return
     fi
-    curl -fsSL "https://github.com/casey/just/releases/download/${JUST_VERSION}/just-${JUST_VERSION}-x86_64-unknown-linux-musl.tar.gz" |
-        sudo tar -xz -C "$BIN_DIR" just
+    if [ ! -x "$MISE" ]; then
+        curl -fsSL https://mise.run | sh
+    fi
 }
 
-install_yamlfmt() {
-    if command -v yamlfmt >/dev/null 2>&1 &&
-        [ "$(yamlfmt -version 2>/dev/null)" = "$YAMLFMT_VERSION" ]; then
-        return
-    fi
-    curl -fsSL "https://github.com/google/yamlfmt/releases/download/v${YAMLFMT_VERSION}/yamlfmt_${YAMLFMT_VERSION}_Linux_x86_64.tar.gz" |
-        sudo tar -xz -C "$BIN_DIR" yamlfmt
+install_mise_tools() {
+    cd "$REPO_DIR"
+    "$MISE" trust --yes mise.toml
+    "$MISE" install --yes
+    # Expose the pinned binaries on the default PATH so agent shells that do
+    # not activate mise can still find them.
+    for tool in just yamlfmt; do
+        sudo ln -sf "$("$MISE" which "$tool")" "$BIN_DIR/$tool"
+    done
 }
 
 install_stow
-install_just
-install_yamlfmt
+install_mise
+install_mise_tools
 
 echo "Installed tooling:"
 printf '  stow    %s\n' "$(stow --version | head -1)"
+printf '  mise    %s\n' "$("$MISE" --version)"
 printf '  just    %s\n' "$(just --version)"
 printf '  yamlfmt %s\n' "$(yamlfmt -version)"
