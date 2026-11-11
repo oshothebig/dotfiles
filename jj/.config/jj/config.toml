@@ -3,3 +3,41 @@
 [user]
 name = "Sho SHIMIZU"
 email = "sho.shimizu@gmail.com"
+
+[revset-aliases]
+# Keep commits authored by other people immutable.
+"immutable_heads()" = "builtin_immutable_heads() | (trunk().. & ~mine())"
+
+[revsets]
+# In a squash workflow, advance bookmarks to the parent rather than the working copy.
+bookmark-advance-to = "@-"
+
+[git]
+# Do not create a local bookmark for the remote default branch on clone.
+track-default-bookmark-on-clone = false
+# Refuse to push commits whose descriptions start with wip:, WIP:, or private:.
+private-commits = "description('wip:*') | description('WIP:*') | description('private:*')"
+
+[templates]
+# Namespace generated push bookmarks with the GitHub login.
+git_push_bookmark = '"oshothebig/push-" ++ change_id.short()'
+
+[remotes.origin]
+# Track bookmarks under that prefix, and not every remote bookmark.
+auto-track-bookmarks = "oshothebig/*"
+
+[snapshot]
+# Update a stale working copy without prompting.
+auto-update-stale = true
+
+[ui]
+# Use jj's built-in pager instead of less.
+pager = ":builtin"
+
+[aliases]
+# Advance the nearest bookmarks.
+tug = ["bookmark", "advance"]
+# Shorthand for `jj git fetch`.
+fetch = ["git", "fetch"]
+# Shorthand for `jj git push`.
+push = ["git", "push"]
