@@ -7,5 +7,10 @@ yamlfmt = "0.21.0"
 
 # Unlike Stow packages, sources here don't mirror the home directory layout.
 [dotfiles]
+"~/.config/bat/config" = "bat/config"
+"~/.config/bat/themes/tokyonight_day.tmTheme" = "bat/themes/tokyonight_day.tmTheme"
+"~/.config/bat/themes/tokyonight_moon.tmTheme" = "bat/themes/tokyonight_moon.tmTheme"
+"~/.config/bat/themes/tokyonight_night.tmTheme" = "bat/themes/tokyonight_night.tmTheme"
+"~/.config/bat/themes/tokyonight_storm.tmTheme" = "bat/themes/tokyonight_storm.tmTheme"
 "~/.config/ghostty/config.ghostty" = "ghostty/config.ghostty"
 "~/.config/yamlfmt/yamlfmt.yaml" = "yamlfmt/yamlfmt.yaml"
