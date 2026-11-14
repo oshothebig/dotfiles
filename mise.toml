@@ -2,7 +2,7 @@
 # Shared by the Cloud Agent bootstrap (.cursor/install.sh) and the Format check
 # workflow (.github/workflows/format.yaml).
 [tools]
-just = "1.50.0"
+just = "1.59.0"
 yamlfmt = "0.21.0"
 
 # Unlike Stow packages, sources here don't mirror the home directory layout.
