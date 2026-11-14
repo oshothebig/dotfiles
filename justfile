@@ -1,7 +1,7 @@
 set shell := ["bash", "-uc"]
 
 packages_nofold := "zsh ssh git claude mise jj codex"
-packages_fold := "sheldon"
+packages_fold := ""
 
 default:
     just --list
@@ -24,7 +24,8 @@ install-copy-files:
     cp {{ justfile_directory() }}/codex/.codex/rules/*.rules {{ home_directory() }}/.codex/rules/
 
 install-fold: create-config-dir
-    stow -v --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ packages_fold }}
+    # Stow exits with an error when no package names are given.
+    [ -z "{{ packages_fold }}" ] || stow -v --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ packages_fold }}
 
 # Deploy the [dotfiles] entries declared in mise.toml.
 install-dotfiles:
@@ -36,7 +37,8 @@ uninstall-nofold:
     stow -v --no-folding --delete --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ packages_nofold }}
 
 uninstall-fold:
-    stow -v --delete --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ packages_fold }}
+    # Stow exits with an error when no package names are given.
+    [ -z "{{ packages_fold }}" ] || stow -v --delete --dir={{ justfile_directory() }} --target={{ home_directory() }} {{ packages_fold }}
 
 # Remove the files deployed by install-dotfiles; sources and mise.toml entries are kept.
 uninstall-dotfiles:
