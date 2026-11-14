@@ -1,7 +1,7 @@
 set shell := ["bash", "-uc"]
 
 packages_nofold := "zsh ssh git claude mise jj codex"
-packages_fold := "bat helix sheldon"
+packages_fold := "helix sheldon"
 
 default:
     just --list
