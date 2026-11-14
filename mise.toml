@@ -7,6 +7,9 @@ yamlfmt = "0.21.0"
 
 # Unlike Stow packages, sources here don't mirror the home directory layout.
 [dotfiles]
+"~/.claude/CLAUDE.md" = "claude/CLAUDE.md"
+"~/.claude/rules/allow-commands.md" = "claude/rules/allow-commands.md"
+"~/.claude/settings.json" = "claude/settings.json"
 "~/.config/bat/config" = "bat/config"
 "~/.config/bat/themes/tokyonight_day.tmTheme" = "bat/themes/tokyonight_day.tmTheme"
 "~/.config/bat/themes/tokyonight_moon.tmTheme" = "bat/themes/tokyonight_moon.tmTheme"
