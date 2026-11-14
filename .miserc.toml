@@ -1,0 +1,4 @@
+# mise/config.toml is the user tool config deployed to ~/.config/mise/config.toml.
+# That path is also a project config filename, so ignore it here. This repository's
+# own tools stay in the root mise.toml.
+ignored_config_paths = ["mise/config.toml"]

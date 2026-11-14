@@ -24,6 +24,7 @@ yamlfmt = "0.21.0"
 "~/.config/helix/config.toml" = "helix/config.toml"
 "~/.config/helix/languages.toml" = "helix/languages.toml"
 "~/.config/jj/config.toml" = "jj/config.toml"
+"~/.config/mise/config.toml" = "mise/config.toml"
 "~/.config/sheldon/plugins.toml" = "sheldon/plugins.toml"
 "~/.config/yamlfmt/yamlfmt.yaml" = "yamlfmt/yamlfmt.yaml"
 "~/.ssh" = { permissions = "0700" }
