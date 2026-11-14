@@ -1,6 +1,6 @@
 set shell := ["bash", "-uc"]
 
-packages_nofold := "zsh ssh git mise codex"
+packages_nofold := "zsh ssh mise codex"
 
 default:
     just --list
