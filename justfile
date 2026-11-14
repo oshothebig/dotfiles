@@ -1,6 +1,6 @@
 set shell := ["bash", "-uc"]
 
-packages_nofold := "zsh mise codex"
+packages_nofold := "mise codex"
 
 default:
     just --list
