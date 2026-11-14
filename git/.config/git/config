@@ -31,5 +31,11 @@
 [merge]
 	conflictStyle = zdiff3
 
+[diff]
+	algorithm = histogram
+	colorMoved = default
+	colorMovedWS = allow-indentation-change
+	renames = copies
+
 [alias]
 	dft = -c diff.external=difft diff
