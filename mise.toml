@@ -4,3 +4,7 @@
 [tools]
 just = "1.50.0"
 yamlfmt = "0.21.0"
+
+# Unlike Stow packages, sources here don't mirror the home directory layout.
+[dotfiles]
+"~/.config/yamlfmt/yamlfmt.yaml" = "yamlfmt/yamlfmt.yaml"
