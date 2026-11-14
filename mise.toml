@@ -10,6 +10,9 @@ yamlfmt = "0.21.0"
 "~/.claude/CLAUDE.md" = "claude/CLAUDE.md"
 "~/.claude/rules/allow-commands.md" = "claude/rules/allow-commands.md"
 "~/.claude/settings.json" = "claude/settings.json"
+"~/.codex/AGENTS.md" = "codex/AGENTS.md"
+# Codex doesn't read *.rules files when they are symlinks.
+"~/.codex/rules/custom.rules" = { source = "codex/rules/custom.rules", mode = "copy" }
 "~/.config/bat/config" = "bat/config"
 "~/.config/bat/themes/tokyonight_day.tmTheme" = "bat/themes/tokyonight_day.tmTheme"
 "~/.config/bat/themes/tokyonight_moon.tmTheme" = "bat/themes/tokyonight_moon.tmTheme"
