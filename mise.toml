@@ -23,4 +23,5 @@ yamlfmt = "0.21.0"
 "~/.config/jj/config.toml" = "jj/config.toml"
 "~/.config/sheldon/plugins.toml" = "sheldon/plugins.toml"
 "~/.config/yamlfmt/yamlfmt.yaml" = "yamlfmt/yamlfmt.yaml"
+"~/.ssh" = { permissions = "0700" }
 "~/.ssh/config" = "ssh/config"
