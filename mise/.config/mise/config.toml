@@ -25,4 +25,4 @@ jj = "latest"
 lazygit = "latest"
 terraform = "latest"
 ruff = "latest"
-azure-cli = { version = "latest", uvx_args = "--prerelease=allow --with pip" }
+azure-cli = "latest"
