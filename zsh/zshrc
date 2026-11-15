@@ -24,11 +24,11 @@ setopt auto_pushd
 # Delete a path segment when pressing Ctrl+w
 export WORDCHARS="${WORDCHARS/\/}"
 
-# sheldon
-eval "$(sheldon source)"
-
 # mise
 eval "$(mise activate zsh)"
+
+# sheldon
+eval "$(sheldon source)"
 
 # PATH to user installed executables
 export PATH="$HOME/.local/bin:$PATH"
