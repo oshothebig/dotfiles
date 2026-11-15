@@ -18,6 +18,11 @@ aws-cli = { version = "latest", symlink_bins = "true" }
 cilium-cli = "latest"
 cilium-hubble = "latest"
 cue = "latest"
+delta = "latest"
+gh = "latest"
+ghq = "latest"
+jj = "latest"
+lazygit = "latest"
 terraform = "latest"
 ruff = "latest"
 azure-cli = { version = "latest", uvx_args = "--prerelease=allow --with pip" }
