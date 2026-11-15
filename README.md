@@ -17,6 +17,7 @@ ghq get https://github.com/oshothebig/dotfiles.git
 cd "$GHQ_ROOT/github.com/oshothebig/dotfiles"
 git remote set-url origin git@github.com:oshothebig/dotfiles.git
 just install
+mise install
 ```
 
 ## Software installed manually
