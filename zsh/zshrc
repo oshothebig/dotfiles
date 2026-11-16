@@ -94,6 +94,16 @@ source <(kind completion zsh)
 # kubectl
 source <(kubectl completion zsh)
 
+source <(gh completion -s zsh)
+source <(just --completions zsh)
+source <(helm completion zsh)
+source <(flux completion zsh)
+source <(kustomize completion zsh)
+source <(stern --completion zsh)
+source <(hubble completion zsh)
+source <(cilium completion zsh)
+source <(cue completion zsh)
+
 # Alias
 alias ls='ls --color=auto'
 alias ll='ls -lhF --color=auto'
