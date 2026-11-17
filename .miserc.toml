@@ -1,0 +1,2 @@
+# Ignore mise/config.toml here, because it is user config for ~/.config/mise and must not be loaded as project config in this repository.
+ignored_config_paths = ["mise/config.toml"]
