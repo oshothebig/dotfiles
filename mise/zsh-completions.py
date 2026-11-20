@@ -5,6 +5,9 @@ Layout under ${XDG_CACHE_HOME:-$HOME/.cache}/zsh/completions:
   versions/<mise-tool>/<mise-version>.zsh
   active/<command>.zsh -> ../versions/<mise-tool>/<mise-version>.zsh
 
+Bin names come from the static allowlist (not `mise registry`). Activate/warm
+only runs `mise ls` + symlink retarget / generate-on-miss.
+
 Usage:
   zsh-completions.py postinstall  # mise [hooks].postinstall
   zsh-completions.py activate     # retarget actives; generate on miss
@@ -16,37 +19,21 @@ import json
 import os
 import subprocess
 import sys
-from functools import lru_cache
 from pathlib import Path
 
-# Completion generator argv after the resolved bin name.
-# Keys are mise tool names (not necessarily the bin name).
-GENERATOR_ARGS: dict[str, list[str]] = {
-    "kind": ["completion", "zsh"],
-    "kubectl": ["completion", "zsh"],
-    "gh": ["completion", "-s", "zsh"],
-    "just": ["--completions", "zsh"],
-    "helm": ["completion", "zsh"],
-    "flux2": ["completion", "zsh"],
-    "kustomize": ["completion", "zsh"],
-    "stern": ["--completion", "zsh"],
-    "cilium-hubble": ["completion", "zsh"],
-    "cilium-cli": ["completion", "zsh"],
-    "cue": ["completion", "zsh"],
-}
-
-BIN_FALLBACK: dict[str, str] = {
-    "kind": "kind",
-    "kubectl": "kubectl",
-    "gh": "gh",
-    "just": "just",
-    "helm": "helm",
-    "flux2": "flux",
-    "kustomize": "kustomize",
-    "stern": "stern",
-    "cilium-hubble": "hubble",
-    "cilium-cli": "cilium",
-    "cue": "cue",
+# mise tool name -> (command/bin name, completion generator argv after the bin).
+ALLOWLIST: dict[str, tuple[str, list[str]]] = {
+    "kind": ("kind", ["completion", "zsh"]),
+    "kubectl": ("kubectl", ["completion", "zsh"]),
+    "gh": ("gh", ["completion", "-s", "zsh"]),
+    "just": ("just", ["--completions", "zsh"]),
+    "helm": ("helm", ["completion", "zsh"]),
+    "flux2": ("flux", ["completion", "zsh"]),
+    "kustomize": ("kustomize", ["completion", "zsh"]),
+    "stern": ("stern", ["--completion", "zsh"]),
+    "cilium-hubble": ("hubble", ["completion", "zsh"]),
+    "cilium-cli": ("cilium", ["completion", "zsh"]),
+    "cue": ("cue", ["completion", "zsh"]),
 }
 
 
@@ -64,6 +51,14 @@ def safe_version(version: str) -> str:
     return version.replace("/", "_")
 
 
+def bin_for_tool(tool: str) -> str:
+    return ALLOWLIST[tool][0]
+
+
+def generator_args(tool: str) -> list[str]:
+    return ALLOWLIST[tool][1]
+
+
 def run_json(args: list[str]) -> object | None:
     try:
         raw = subprocess.check_output(args, text=True, stderr=subprocess.DEVNULL)
@@ -72,30 +67,18 @@ def run_json(args: list[str]) -> object | None:
         return None
 
 
-@lru_cache(maxsize=None)
-def bin_for_tool(tool: str) -> str:
-    data = run_json(["mise", "registry", "-J", tool])
-    if isinstance(data, list):
-        data = data[0] if data else {}
-    if isinstance(data, dict):
-        bins = data.get("bins") or []
-        if bins:
-            return str(bins[0])
-    return BIN_FALLBACK.get(tool, tool)
-
-
 def version_file(root: Path, tool: str, version: str) -> Path:
     return root / "versions" / tool / f"{safe_version(version)}.zsh"
 
 
 def generate_version(root: Path, tool: str, version: str) -> Path | None:
-    if tool not in GENERATOR_ARGS:
+    if tool not in ALLOWLIST:
         return None
 
     path = version_file(root, tool, version)
     path.parent.mkdir(parents=True, exist_ok=True)
     bin_name = bin_for_tool(tool)
-    cmd = ["mise", "exec", f"{tool}@{version}", "--", bin_name, *GENERATOR_ARGS[tool]]
+    cmd = ["mise", "exec", f"{tool}@{version}", "--", bin_name, *generator_args(tool)]
     tmp = path.with_suffix(".zsh.tmp")
     try:
         with tmp.open("w", encoding="utf-8") as fh:
@@ -120,6 +103,9 @@ def link_active(root: Path, tool: str, version: str, bin_name: str) -> Path | No
     active_path = active_dir / f"{bin_name}.zsh"
     rel = Path("..") / "versions" / tool / f"{safe_version(version)}.zsh"
     if active_path.is_symlink() or active_path.exists():
+        # Skip rewrite when the target already matches.
+        if active_path.is_symlink() and os.readlink(active_path) == str(rel):
+            return active_path
         active_path.unlink()
     active_path.symlink_to(rel)
     return active_path
@@ -143,7 +129,7 @@ def current_allowlisted() -> list[tuple[str, str]]:
         return []
     out: list[tuple[str, str]] = []
     for tool, entries in data.items():
-        if tool not in GENERATOR_ARGS or not isinstance(entries, list):
+        if tool not in ALLOWLIST or not isinstance(entries, list):
             continue
         for entry in entries:
             if not isinstance(entry, dict):
@@ -186,7 +172,7 @@ def postinstall(root: Path) -> None:
                 continue
             name = entry.get("name")
             version = entry.get("version")
-            if name in GENERATOR_ARGS and version:
+            if name in ALLOWLIST and version:
                 generate_version(root, str(name), str(version))
 
     retarget_actives(root)
