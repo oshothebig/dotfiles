@@ -51,3 +51,15 @@ yq = "latest"
 zola = "latest"
 zellij = "latest"
 zoxide = "latest"
+
+# Generate zsh completion scripts on install; retarget active symlinks on cd.
+[hooks]
+postinstall = { run = 'python3 "$HOME/.config/mise/zsh-completions.py" postinstall', shell = "bash -c" }
+
+[[hooks.cd]]
+shell = "zsh"
+script = '''
+if typeset -f _mise_zsh_completions_refresh >/dev/null; then
+  _mise_zsh_completions_refresh
+fi
+'''
