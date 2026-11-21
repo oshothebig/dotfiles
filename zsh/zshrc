@@ -63,46 +63,61 @@ export GHQ_ROOT=$HOME/src
 
 export EDITOR=hx
 
-function build_source_cache() {
-    local cmd_name="$1"
-    local cmd_bin_path="$(command -v $cmd_name)"
-
-    if [[ -z "$cmd_bin_path" ]]; then
-        return 0
+# Completion
+# Completion scripts printed by the commands listed in
+# $XDG_CONFIG_HOME/zsh/completion-generators are cached as autoloadable
+# functions in fpath, so tools aren't run on every startup and each script is
+# loaded only when its completion is first used. A cache is regenerated when
+# the tool's resolved binary path (which includes its version for mise and
+# Homebrew) changes or the binary is newer than the cache.
+() {
+    local -A generators
+    local list="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/completion-generators"
+    if [[ -r "$list" ]]; then
+        local name args
+        while read -r name args; do
+            # Skip blank lines and comments.
+            [[ -z "$name" || "$name" == '#'* ]] && continue
+            generators[$name]="$name $args"
+        done < "$list"
     fi
 
-    local cache_dir="$HOME/.cache/zsh"
-    if [[ ! -d "$cache_dir" ]]; then
-        mkdir -p "$cache_dir"
-    fi
+    local cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/completions"
+    [[ -d "$cache_dir" ]] || mkdir -p "$cache_dir"
 
-    local cache_path="$cache_dir/${cmd_name}.zsh"
-    if [[ -r "$cache_path" && "$cache_path" -nt "$cmd_bin_path" ]]; then
-        return 0
-    fi
+    # Remove caches of tools that are no longer listed.
+    local file
+    for file in "$cache_dir"/_*(N); do
+        (( $+generators[${${file:t}#_}] )) || rm -f "$file"
+    done
 
-    print -P "%F{green}Generating cache: $cache_path"
-    "$@" > "$cache_path"
+    for name in ${(k)generators}; do
+        local file="$cache_dir/_$name"
+        if (( ! $+commands[$name] )); then
+            [[ -e "$file" ]] && rm -f "$file"
+            continue
+        fi
+
+        local bin="${commands[$name]:A}"
+        local stamp="# Generated from $bin"
+        if [[ -r "$file" && ! "$bin" -nt "$file" ]]; then
+            local header=
+            { read -r header; read -r header } < "$file"
+            [[ "$header" == "$stamp" ]] && continue
+        fi
+
+        local script="$(${(z)generators[$name]} 2>/dev/null)"
+        [[ "$script" == '#compdef '* ]] || continue
+        # Keep #compdef on the first line so that compinit picks it up.
+        local -a lines=("${(@f)script}")
+        print -rl -- "$lines[1]" "$stamp" "${(@)lines[2,-1]}" > "$file"
+    done
+
+    fpath=("$cache_dir" $fpath)
 }
 
-# Completion
 autoload -Uz compinit && compinit
 zstyle ':completion:*:default' menu select=2
-
-source <(kind completion zsh)
-
-# kubectl
-source <(kubectl completion zsh)
-
-source <(gh completion -s zsh)
-source <(just --completions zsh)
-source <(helm completion zsh)
-source <(flux completion zsh)
-source <(kustomize completion zsh)
-source <(stern --completion zsh)
-source <(hubble completion zsh)
-source <(cilium completion zsh)
-source <(cue completion zsh)
 
 # Alias
 alias ls='ls --color=auto'
