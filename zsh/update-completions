@@ -3,16 +3,12 @@
 # $XDG_CONFIG_HOME/zsh/completion-generators as autoloadable functions in fpath,
 # so tools aren't run on every startup and each script is loaded only when its
 # completion is first used. A cache is regenerated when the tool's resolved
-# binary path (which includes its version for mise and Homebrew) changes or the
-# binary is newer than the cache.
+# binary path (which includes its version for mise and Homebrew) changes.
 #
-# zshrc sources this on startup, and mise's postinstall hook runs it with --force
-# after tools are installed or updated to regenerate every cache, so that caches
-# are usually up to date by the time a shell starts.
+# zshrc sources this on startup, and mise's postinstall hook runs it after tools
+# are installed or updated, so that caches are usually up to date by the time a
+# shell starts.
 () {
-    local force=0
-    [[ "$1" == --force ]] && force=1
-
     local -A generators
     local list="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/completion-generators"
     if [[ -r "$list" ]]; then
@@ -42,7 +38,7 @@
 
         local bin="${commands[$name]:A}"
         local stamp="# Generated from $bin"
-        if (( ! force )) && [[ -r "$file" && ! "$bin" -nt "$file" ]]; then
+        if [[ -r "$file" ]]; then
             local header=
             { read -r header; read -r header } < "$file"
             [[ "$header" == "$stamp" ]] && continue
@@ -57,4 +53,4 @@
 
     # No effect when run as a script from mise's postinstall hook.
     fpath=("$cache_dir" $fpath)
-} "$@"
+}

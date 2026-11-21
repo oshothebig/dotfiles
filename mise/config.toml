@@ -54,4 +54,4 @@ zoxide = "latest"
 
 [hooks]
 # Regenerate zsh completion caches after tools are installed or updated.
-postinstall = 'zsh "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/update-completions" --force'
+postinstall = 'zsh "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/update-completions"'
