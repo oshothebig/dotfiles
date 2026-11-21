@@ -51,3 +51,9 @@ yq = "latest"
 zola = "latest"
 zellij = "latest"
 zoxide = "latest"
+
+# Pre-generate zsh completions of installed tools and keep them in sync with the
+# active versions (see zsh/mise-completions.zsh).
+[hooks]
+postinstall = "zsh ~/.config/zsh/mise-completions.zsh postinstall"
+cd = { script = "(( $+functions[_mc_sync] )) && _mc_sync", shell = "zsh" }

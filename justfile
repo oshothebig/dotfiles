@@ -18,3 +18,7 @@ uninstall: uninstall-dotfiles
 # Remove the files deployed by install-dotfiles; sources and mise.toml entries are kept.
 uninstall-dotfiles:
     mise dotfiles unapply --yes
+
+# Remove pre-generated zsh completions of mise tool versions that are no longer installed.
+prune-completions:
+    zsh ~/.config/zsh/mise-completions.zsh prune
