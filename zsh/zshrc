@@ -65,7 +65,7 @@ export EDITOR=hx
 
 # Completion
 # Completion scripts printed by the commands listed in
-# ~/.config/zsh/completion-generators are cached as autoloadable
+# $XDG_CONFIG_HOME/zsh/completion-generators are cached as autoloadable
 # functions in fpath, so tools aren't run on every startup and each script is
 # loaded only when its completion is first used. A cache is regenerated when
 # the tool's resolved binary path (which includes its version for mise and
@@ -73,7 +73,7 @@ export EDITOR=hx
 () {
     local -A generators
     local line
-    for line in ${(f)"$(<$HOME/.config/zsh/completion-generators)"}; do
+    for line in ${(f)"$(<${XDG_CONFIG_HOME:-$HOME/.config}/zsh/completion-generators)"}; do
         [[ "$line" == '#'* ]] || generators[${line%% *}]="$line"
     done 2>/dev/null
 
