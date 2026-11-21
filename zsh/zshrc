@@ -86,26 +86,26 @@ export EDITOR=hx
     local cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/completions"
     [[ -d "$cache_dir" ]] || mkdir -p "$cache_dir"
 
-    local name file bin header stamp script
-    local -a lines
+    local name
     for name in ${(k)generators}; do
-        file="$cache_dir/_$name"
+        local file="$cache_dir/_$name"
         if (( ! $+commands[$name] )); then
             [[ -e "$file" ]] && rm -f "$file"
             continue
         fi
 
-        bin="${commands[$name]:A}"
-        stamp="# Generated from $bin"
+        local bin="${commands[$name]:A}"
+        local stamp="# Generated from $bin"
         if [[ -r "$file" && ! "$bin" -nt "$file" ]]; then
+            local header=
             { read -r header; read -r header } < "$file"
             [[ "$header" == "$stamp" ]] && continue
         fi
 
-        script="$(${(z)generators[$name]} 2>/dev/null)"
+        local script="$(${(z)generators[$name]} 2>/dev/null)"
         [[ "$script" == '#compdef '* ]] || continue
         # Keep #compdef on the first line so that compinit picks it up.
-        lines=("${(@f)script}")
+        local -a lines=("${(@f)script}")
         print -rl -- "$lines[1]" "$stamp" "${(@)lines[2,-1]}" > "$file"
     done
 
