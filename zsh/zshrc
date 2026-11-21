@@ -72,10 +72,15 @@ export EDITOR=hx
 # Homebrew) changes or the binary is newer than the cache.
 () {
     local -A generators
-    local line
-    for line in ${(f)"$(<${XDG_CONFIG_HOME:-$HOME/.config}/zsh/completion-generators)"}; do
-        [[ "$line" == '#'* ]] || generators[${line%% *}]="$line"
-    done 2>/dev/null
+    local list="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/completion-generators"
+    if [[ -r "$list" ]]; then
+        local name args
+        while read -r name args; do
+            # Skip blank lines and comments.
+            [[ -z "$name" || "$name" == '#'* ]] && continue
+            generators[$name]="$name $args"
+        done < "$list"
+    fi
 
     local cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/completions"
     [[ -d "$cache_dir" ]] || mkdir -p "$cache_dir"
@@ -86,7 +91,6 @@ export EDITOR=hx
         (( $+generators[${${file:t}#_}] )) || rm -f "$file"
     done
 
-    local name
     for name in ${(k)generators}; do
         local file="$cache_dir/_$name"
         if (( ! $+commands[$name] )); then
