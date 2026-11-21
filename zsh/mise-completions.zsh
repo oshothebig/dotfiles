@@ -5,7 +5,7 @@
 #
 #   $_MC_ROOT/versions/<mise-tool>/<mise-version>.zsh  generated scripts
 #   $_MC_ROOT/active/<bin>.zsh                        symlinks to the active versions
-#   $_MC_ROOT/map.zsh                                 bin -> mise tool, built from `mise registry`
+#   $_MC_ROOT/map.zsh                                 bin -> mise tool names, built from `mise registry`
 #
 # Usage:
 #   source mise-completions.zsh && _mc_sync --source-all  # ~/.zshrc, after compinit
@@ -31,17 +31,20 @@ typeset -ga MISE_COMPLETION_COMMANDS=(
 
 typeset -g _MC_ROOT="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/completions"
 typeset -g _MC_SELF="${${(%):-%x}:A}"
-typeset -gA _MC_BIN_TO_TOOL _MC_CURRENT
+# _MC_BIN_TOOLS: bin -> space-separated tool names that may provide it (registry short
+# names and their aliases, e.g. gh -> "github-cli gh"). The one in `mise current` wins.
+typeset -gA _MC_BIN_TOOLS _MC_CURRENT
 
 _mc_warn() {
     print -ru2 -- "mise-completions: $*"
 }
 
-# Prints "<bin> <tool>" for every bin in MISE_COMPLETION_COMMANDS found in the registry.
+# Prints "<bin> <tool names...>" for every bin in MISE_COMPLETION_COMMANDS found in the registry.
 _mc_registry_lookup() {
     local -a bins=(${MISE_COMPLETION_COMMANDS%% *})
     mise registry --json --hide-aliased 2>/dev/null |
-        jq -r '.[] | .short as $tool | (.bins // [])[] | select(IN($ARGS.positional[])) | "\(.) \($tool)"' \
+        jq -r '.[] | ([.short] + (.aliases // []) | join(" ")) as $tools
+            | (.bins // [])[] | select(IN($ARGS.positional[])) | "\(.) \($tools)"' \
             --args -- $bins
 }
 
@@ -60,15 +63,12 @@ _mc_build_map() {
         return 1
     fi
 
-    # When several registry tools provide the same bin, prefer the one that is active.
-    _mc_read_current
+    # Several registry tools may provide the same bin; keep them all.
     local -A found
-    local line bin tool
+    local line bin
     for line in $lines; do
-        bin=${line%% *} tool=${line#* }
-        if [[ -z ${found[$bin]} ]] || { [[ -n ${_MC_CURRENT[$tool]} ]] && [[ -z ${_MC_CURRENT[${found[$bin]}]} ]] }; then
-            found[$bin]=$tool
-        fi
+        bin=${line%% *}
+        found[$bin]="${found[$bin]:+${found[$bin]} }${line#* }"
     done
 
     for bin in ${MISE_COMPLETION_COMMANDS%% *}; do
@@ -76,7 +76,7 @@ _mc_build_map() {
     done
 
     mkdir -p $_MC_ROOT || return 1
-    print -r -- "typeset -gA _MC_BIN_TO_TOOL=(${(@kvq)found})" >| $map.tmp.$$ &&
+    print -r -- "typeset -gA _MC_BIN_TOOLS=(${(@kvq)found})" >| $map.tmp.$$ &&
         mv -f $map.tmp.$$ $map || return 1
 
     # The command list or the registry may have changed; retry failed generations.
@@ -91,9 +91,25 @@ _mc_load_map() {
     source $map
 }
 
-# Fills _MC_CURRENT (tool -> version) from a single `mise current` call.
+# Fills _MC_CURRENT (tool -> version) with the tool versions active in this shell.
+#
+# `mise activate` puts <data dir>/installs/<tool>/<version>[/bin] on PATH for every
+# active tool, so the versions are read from $path without spawning a process
+# (`mise current` alone costs as much as several completion generators). Falls back
+# to `mise current` when mise is not activated (e.g. shims only).
 _mc_read_current() {
     _MC_CURRENT=()
+    local installs=${MISE_DATA_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/mise}/installs/
+    local dir
+    local -a parts
+    for dir in $path; do
+        [[ $dir == $installs* ]] || continue
+        parts=(${(s:/:)dir#$installs})
+        # The first entry wins, as it does for command lookup.
+        (( $#parts >= 2 )) && [[ -z ${_MC_CURRENT[${parts[1]}]} ]] && _MC_CURRENT[${parts[1]}]=${parts[2]}
+    done
+    (( $#_MC_CURRENT )) && return 0
+
     local line
     local -a fields
     for line in ${(f)"$(mise current 2>/dev/null)"}; do
@@ -135,14 +151,18 @@ _mc_sync() {
     _mc_read_current
     mkdir -p $_MC_ROOT/active || return 0
 
-    local cmd bin tool version target link
+    local cmd bin tool candidate version target link
     local -a to_source
     for cmd in $MISE_COMPLETION_COMMANDS; do
         bin=${cmd%% *}
-        tool=${_MC_BIN_TO_TOOL[$bin]}
-        [[ -n $tool ]] || continue
         link=$_MC_ROOT/active/$bin.zsh
-        version=${_MC_CURRENT[$tool]}
+        tool= version=
+        for candidate in ${=_MC_BIN_TOOLS[$bin]}; do
+            if [[ -n ${_MC_CURRENT[$candidate]} ]]; then
+                tool=$candidate version=${_MC_CURRENT[$candidate]}
+                break
+            fi
+        done
 
         if [[ -z $version ]]; then
             # Not active here. Keep the completion already loaded in this shell.
@@ -189,8 +209,8 @@ _mc_postinstall() {
     local line tool version bin
     for line in ${(f)"$(jq -r '.[] | "\(.name) \(.version)"' <<<${MISE_INSTALLED_TOOLS:-[]} 2>/dev/null)"}; do
         tool=${line%% *} version=${line#* }
-        for bin in ${(k)_MC_BIN_TO_TOOL[(R)$tool]}; do
-            [[ -n ${bin_to_cmd[$bin]} ]] && _mc_generate $tool $version ${(z)bin_to_cmd[$bin]}
+        for bin in ${(k)bin_to_cmd}; do
+            (( ${${=_MC_BIN_TOOLS[$bin]}[(Ie)$tool]} )) && _mc_generate $tool $version ${(z)bin_to_cmd[$bin]}
         done
     done
     return 0
