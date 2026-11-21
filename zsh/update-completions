@@ -1,0 +1,56 @@
+#!/usr/bin/env zsh
+# Caches the completion scripts printed by the commands listed in
+# $XDG_CONFIG_HOME/zsh/completion-generators as autoloadable functions in fpath,
+# so tools aren't run on every startup and each script is loaded only when its
+# completion is first used. A cache is regenerated when the tool's resolved
+# binary path (which includes its version for mise and Homebrew) changes.
+#
+# zshrc sources this on startup, and mise's postinstall hook runs it after tools
+# are installed or updated, so that caches are usually up to date by the time a
+# shell starts.
+() {
+    local -A generators
+    local list="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/completion-generators"
+    if [[ -r "$list" ]]; then
+        local name args
+        while read -r name args; do
+            # Skip blank lines and comments.
+            [[ -z "$name" || "$name" == '#'* ]] && continue
+            generators[$name]="$name $args"
+        done < "$list"
+    fi
+
+    local cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/completions"
+    [[ -d "$cache_dir" ]] || mkdir -p "$cache_dir"
+
+    # Remove caches of tools that are no longer listed.
+    local file
+    for file in "$cache_dir"/_*(N); do
+        (( $+generators[${${file:t}#_}] )) || rm -f "$file"
+    done
+
+    for name in ${(k)generators}; do
+        local file="$cache_dir/_$name"
+        if (( ! $+commands[$name] )); then
+            [[ -e "$file" ]] && rm -f "$file"
+            continue
+        fi
+
+        local bin="${commands[$name]:A}"
+        local stamp="# Generated from $bin"
+        if [[ -r "$file" ]]; then
+            local header=
+            { read -r header; read -r header } < "$file"
+            [[ "$header" == "$stamp" ]] && continue
+        fi
+
+        local script="$(${(z)generators[$name]} 2>/dev/null)"
+        [[ "$script" == '#compdef '* ]] || continue
+        # Keep #compdef on the first line so that compinit picks it up.
+        local -a lines=("${(@f)script}")
+        print -rl -- "$lines[1]" "$stamp" "${(@)lines[2,-1]}" > "$file"
+    done
+
+    # No effect when run as a script from mise's postinstall hook.
+    fpath=("$cache_dir" $fpath)
+}
