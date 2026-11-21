@@ -87,6 +87,7 @@ export EDITOR=hx
     [[ -d "$cache_dir" ]] || mkdir -p "$cache_dir"
 
     local name file bin header stamp script
+    local -a lines
     for name in ${(k)generators}; do
         file="$cache_dir/_$name"
         if (( ! $+commands[$name] )); then
@@ -104,7 +105,8 @@ export EDITOR=hx
         script="$(${(z)generators[$name]} 2>/dev/null)"
         [[ "$script" == '#compdef '* ]] || continue
         # Keep #compdef on the first line so that compinit picks it up.
-        print -r -- "${script%%$'\n'*}"$'\n'"$stamp"$'\n'"${script#*$'\n'}" > "$file"
+        lines=("${(@f)script}")
+        print -rl -- "$lines[1]" "$stamp" "${(@)lines[2,-1]}" > "$file"
     done
 
     fpath=("$cache_dir" $fpath)
