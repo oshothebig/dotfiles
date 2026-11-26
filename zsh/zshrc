@@ -24,6 +24,10 @@ setopt auto_pushd
 # Delete a path segment when pressing Ctrl+w
 export WORDCHARS="${WORDCHARS/\/}"
 
+# T3 Code: disable product telemetry and relay tracing
+export T3CODE_TELEMETRY_ENABLED=false
+export DO_NOT_TRACK=1
+
 # mise
 eval "$(mise activate zsh)"
 
