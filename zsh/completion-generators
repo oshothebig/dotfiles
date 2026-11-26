@@ -1,13 +1,21 @@
 # Commands that print a zsh completion script, one per line.
 # The first word is the tool's command name. Lines starting with # are ignored.
+argo completion zsh
 cilium completion zsh
+crane completion zsh
 cue completion zsh
+fd --gen-completions zsh
 flux completion zsh
 gh completion -s zsh
 helm completion zsh
 hubble completion zsh
+jj util completion zsh
 just --completions zsh
 kind completion zsh
 kubectl completion zsh
 kustomize completion zsh
+rg --generate complete-zsh
 stern --completion zsh
+uv generate-shell-completion zsh
+uvx --generate-shell-completion zsh
+yq shell-completion zsh
